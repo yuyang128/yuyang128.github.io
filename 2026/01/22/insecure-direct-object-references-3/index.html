@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Insecure Direct Object References | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Direct Object References鐩存帴瀵硅薄寮曠敤Direct Object References are when an application uses client-provided input to access data &amp; objects.鐩存帴瀵硅薄寮曠敤鏄寚搴旂敤绋嬪簭浣跨敤瀹㈡埛绔彁渚涚殑杈撳叆鏉ヨ闂暟鎹拰瀵硅薄銆? Examples聽绀轰緥Ex">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Insecure Direct Object References">
+<meta property="og:url" content="https://yuyang128.github.io/2026/01/22/insecure-direct-object-references-3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Direct Object References鐩存帴瀵硅薄寮曠敤Direct Object References are when an application uses client-provided input to access data &amp; objects.鐩存帴瀵硅薄寮曠敤鏄寚搴旂敤绋嬪簭浣跨敤瀹㈡埛绔彁渚涚殑杈撳叆鏉ヨ闂暟鎹拰瀵硅薄銆? Examples聽绀轰緥Ex">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yuyang128.github.io/image%204.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%205.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%206.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%207.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%208.png">
+<meta property="article:published_time" content="2026-01-22T09:09:36.000Z">
+<meta property="article:modified_time" content="2026-01-22T09:09:36.693Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yuyang128.github.io/image%204.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives/">Archives</a>
+        
+          <a class="main-nav-link" href="/general/">General</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://yuyang128.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-insecure-direct-object-references-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/01/22/insecure-direct-object-references-3/" class="article-date">
+  <time class="dt-published" datetime="2026-01-22T09:09:36.000Z" itemprop="datePublished">2026-01-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/General/">General</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Insecure Direct Object References
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <h1 id="Direct-Object-References鐩存帴瀵硅薄寮曠敤"><a href="#Direct-Object-References鐩存帴瀵硅薄寮曠敤" class="headerlink" title="Direct Object References鐩存帴瀵硅薄寮曠敤"></a><strong>Direct Object References鐩存帴瀵硅薄寮曠敤</strong></h1><p>Direct Object References are when an application uses client-provided input to access data &amp; objects.鐩存帴瀵硅薄寮曠敤鏄寚搴旂敤绋嬪簭浣跨敤瀹㈡埛绔彁渚涚殑杈撳叆鏉ヨ闂暟鎹拰瀵硅薄銆?</p>
+<h1 id="Examples聽绀轰緥"><a href="#Examples聽绀轰緥" class="headerlink" title="Examples聽绀轰緥"></a><strong>Examples聽绀轰緥</strong></h1><p>Examples of Direct Object References using the GET method may look something like浣跨敤 GET 鏂规硶杩涜鐩存帴瀵硅薄寮曠敤鐨勭ず渚嬪彲鑳藉涓?<br><a target="_blank" rel="noopener" href="https://some.company.tld/dor?id=12345"><code>https://some.company.tld/dor?id=12345</code></a></p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/images?img=12345"><code>https://some.company.tld/images?img=12345</code></a></p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/dor/12345"><code>https://some.company.tld/dor/12345</code></a></p>
+<h1 id="Other-Methods聽鍏朵粬鏂规硶"><a href="#Other-Methods聽鍏朵粬鏂规硶" class="headerlink" title="Other Methods聽鍏朵粬鏂规硶"></a><strong>Other Methods聽鍏朵粬鏂规硶</strong></h1><p>POST, PUT, DELETE or other methods are also potentially susceptible and mainly only differ in the method and the potential payload.POST銆丳UT銆丏ELETE 鎴栧叾浠栨柟娉曚篃鍙兘鏄撳彈褰卞搷锛屼富瑕佸尯鍒湪浜庢柟娉曞拰娼滃湪鐨勬湁鏁堣浇鑽枫€?</p>
+<h1 id="Insecure聽Direct-Object-References涓嶅畨鍏ㄦ劅鐩存帴瀵硅薄寮曠敤"><a href="#Insecure聽Direct-Object-References涓嶅畨鍏ㄦ劅鐩存帴瀵硅薄寮曠敤" class="headerlink" title="Insecure聽Direct Object References涓嶅畨鍏ㄦ劅鐩存帴瀵硅薄寮曠敤"></a><strong>Insecure聽Direct Object References涓嶅畨鍏ㄦ劅鐩存帴瀵硅薄寮曠敤</strong></h1><p>These are considered insecure when the reference is not properly handled and allows for authorization bypasses or disclose private data that could be used to perform operations or access data that the user should not be able to perform or access. Let鈥檚 say that as a user, you go to view your profile and the URL looks something like:褰撳紩鐢ㄥ鐞嗕笉褰擄紝骞跺厑璁告巿鏉冪粫杩囨垨娉勯湶鍙兘鐢ㄤ簬鎵ц浣滄垨璁块棶鐢ㄦ埛涓嶅簲璁块棶鐨勪綔鎴栨暟鎹椂锛岃繖浜涙暟鎹瑙嗕负涓嶅畨鍏ㄣ€傚亣璁句綔涓虹敤鎴凤紝浣犳煡鐪嬩綘鐨勪釜浜鸿祫鏂欙紝URL 鐪嬭捣鏉ュ儚锛?<br><a target="_blank" rel="noopener" href="https://some.company.tld/app/user/23398"><code>https://some.company.tld/app/user/23398</code></a></p>
+<p>… and you can view your profile there. What happens if you navigate to:…浣犲彲浠ュ湪閭ｉ噷鏌ョ湅浣犵殑涓汉璧勬枡銆傚鏋滀綘瀵艰埅鍒帮細</p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/app/user/23399"><code>https://some.company.tld/app/user/23399</code></a>聽鈥?or use another number at the end. If you can manipulate the number (user id) and view another鈥檚 profile, then the object reference is insecure. This of course can be checked or expanded beyond GET methods to view data, but to also manipulate data.<a target="_blank" rel="noopener" href="https://some.company.tld/app/user/23399"><code>https://some.company.tld/app/user/23399</code></a>聽……鎴栬€呭湪缁撳熬浣跨敤鍙︿竴涓暟瀛椼€傚鏋滀綘鑳戒綔鍙风爜锛堢敤鎴?ID锛夊苟鏌ョ湅浠栦汉鐨勮祫鏂欙紝閭ｄ箞璇ュ璞″紩鐢ㄦ槸涓嶅畨鍏ㄧ殑銆傚綋鐒讹紝杩欏彲浠ヨ妫€鏌ユ垨鎵╁睍鍒拌秴瓒?GET 鏂规硶锛屼笉浠呯敤浜庢煡鐪嬫暟鎹紝杩樿兘浣滄暟鎹€?</p>
+<h1 id="Authenticate-First-Abuse-Authorization-Later鍏堣璇侊紝鍚庢互鐢ㄦ巿鏉"><a href="#Authenticate-First-Abuse-Authorization-Later鍏堣璇侊紝鍚庢互鐢ㄦ巿鏉" class="headerlink" title="*Authenticate First, Abuse Authorization Later鍏堣璇侊紝鍚庢互鐢ㄦ巿鏉?"></a>*<em>Authenticate First, Abuse Authorization Later鍏堣璇侊紝鍚庢互鐢ㄦ巿鏉?</em></h1><p>Many access control issues are susceptible to attack from an authenticated-but-unauthorized user. So, let鈥檚 start by legitimately authenticating. Then, we will look for ways to bypass or abuse Authorization.璁稿璁块棶鎺у埗闂瀹规槗鍙楀埌宸茶璇佷絾鏈巿鏉冪敤鎴风殑鏀诲嚮銆傞偅涔堬紝鎴戜滑鍏堜粠鍚堟硶璁よ瘉寮€濮嬨€傜劧鍚庯紝鎴戜滑浼氬鎵剧粫杩囨垨婊ョ敤鎺堟潈鐨勬柟娉?<br>棣栧厛鐧诲叆璁よ瘉</p>
+<p><img src="/image%204.png" alt="image.png"></p>
+<p>鐒跺悗鎴戜滑View Profile鎴戜滑鑳藉氨鑳界湅鍒拌澶氬弬鏁帮紝鍚屾椂瑕佹槑鐧紸ppSec 杩涙敾鏂圭殑涓€涓竴璐師鍒欐槸锛岃浠庡鍙鍐呭鐨勫師濮嬪弽搴斾腑鐪嬪嚭宸紓銆傛崲鍙ヨ瘽璇达紙锛屽師濮嬪洖澶嶄腑甯稿父瀛樺湪涓€浜涙暟鎹苟鏈樉绀哄湪灞忓箷涓婃垨椤甸潰涓娿€傛瘮濡俽ole鍜孖D</p>
+<p><img src="/image%205.png" alt="image.png"></p>
+<p><img src="/image%206.png" alt="image.png"></p>
+<p>杩欓噷submit灏辨槸涓婁氦role,userID</p>
+<h1 id="Guessing-Predicting-Patterns鐚滄祴涓庨娴嬫a寮"><a href="#Guessing-Predicting-Patterns鐚滄祴涓庨娴嬫a寮" class="headerlink" title="*Guessing &amp; Predicting Patterns鐚滄祴涓庨娴嬫ā寮?"></a>*<em>Guessing &amp; Predicting Patterns鐚滄祴涓庨娴嬫ā寮?</em></h1><h3 id="View-Your-Own-Profile-Another-Way浠ュ彟涓€绉嶆柟寮忔煡鐪嬩綘鐨勪釜浜鸿祫鏂"><a href="#View-Your-Own-Profile-Another-Way浠ュ彟涓€绉嶆柟寮忔煡鐪嬩綘鐨勪釜浜鸿祫鏂" class="headerlink" title="*View Your Own Profile Another Way浠ュ彟涓€绉嶆柟寮忔煡鐪嬩綘鐨勪釜浜鸿祫鏂?"></a>*<em>View Your Own Profile Another Way浠ュ彟涓€绉嶆柟寮忔煡鐪嬩綘鐨勪釜浜鸿祫鏂?</em></h3><p>The application we are working with seems to follow a RESTful pattern so far as the profile goes. Many apps have roles in which an elevated user may access content of another. In that case, just &#x2F;profile won鈥檛 work since the own user鈥檚 session&#x2F;authentication data won鈥檛 tell us whose profile they want view. 鎴戜滑浣跨敤鐨勫簲鐢ㄥ湪閰嶇疆鏂囦欢鏂归潰浼间箮閬靛惊浜?RESTful 鐨勬ā寮忋€傝澶氬簲鐢ㄨ鏈夎鑹诧紝璁╄鎻愬崌鐨勭敤鎴峰彲浠ヨ闂粬浜虹殑鍐呭銆傚湪杩欑鎯呭喌涓嬶紝鍗曠函浣跨敤 &#x2F;profile 鏄笉琛岀殑锛屽洜涓鸿嚜宸辩敤鎴风殑浼氳瘽&#x2F;璁よ瘉鏁版嵁涓嶄細鍛婅瘔鎴戜滑浠栦滑鎯虫煡鐪嬭皝鐨勯厤缃枃浠躲€?<br>杩欓噷submit灏辫鎻愪氦&#x2F;WebGoat&#x2F;IDOR&#x2F;profile&#x2F;鍔犱笂鑷繁鐨処D浜嗭紝鍜屽師濮嬬殑鎻愪氦鐨刄RL澶氫竴涓獅userID}鍙傛暟锛岃繖鏍锋垜浠篃鏄庣櫧鍙互鍘绘敼鍙樿繖涓獅userID}鍘昏闂叾浠栫敤鎴风殑涓汉璧勬枡</p>
+<p><img src="/image%207.png" alt="image.png"></p>
+<p>杩欓噷鏌ョ湅鍏朵粬璧勬枡闇€瑕佺敤fuzz鍘诲皾璇昒RL鏈熬鐢ㄦ埛ID鐨勪笉鍚屽€?<br>鍚屾椂缂栬緫鍙︿竴涓祫鏂欐湁涓€涓渶瑕佹敞鎰忕殑鐐癸紝杩欓噷浣跨敤鐨勬槸RESTful搴旂敤锛岃繖涓簲鐢ㄦ湁涓€涓壒鐐硅繖涓帴鍙ｅ彧鍏佽浣犱娇鐢?<strong>GET</strong>锛堣幏鍙栨暟鎹級鎴?<strong>PUT</strong>锛堜慨鏀?鏇存柊鏁版嵁锛夈€傚湪 RESTful 鏋舵瀯涓紝淇敼璧勬簮閫氬父搴旇浣跨敤 <code>PUT</code> 鑰屼笉鏄?<code>POST</code>銆?<br>鍚屾椂杩欓噷杩樹細鎶ラ敊<strong>415 Unsupported Media Type</strong>锛堜笉鏀寔鐨勫獟浣撶被鍨嬶級锛堝鏋滀綘body甯歌锛夛紝浣犻渶瑕佸幓鏀圭粨鏋滃嚑涓偣</p>
+<ul>
+<li>*<em>淇敼璇锋眰澶?(Header)锛?</em><br>灏?<code>Content-Type: application/x-www-form-urlencoded; charset=UTF-8</code><br>鏀逛负 <code>Content-Type: application/json</code></li>
+<li>*<em>淇敼璇锋眰浣?(Body)锛?</em><br>灏?<code>role=2&amp;color=red</code> 杩欑琛ㄥ崟鏍煎紡鏀逛负 JSON 鏍煎紡銆?<br>鍚屾椂娉ㄦ剰Body瑕佸畬鏁?<br><img src="/image%208.png" alt="image.png"></li>
+</ul>
+<p>PUT &#x2F;WebGoat&#x2F;IDOR&#x2F;profile&#x2F;2342388 HTTP&#x2F;1.1<br>Host: 192.168.234.130:8080<br>X-Requested-With: XMLHttpRequest<br>Accept: application&#x2F;json<br>Content-Type: application&#x2F;json<br>Cookie: JSESSIONID&#x3D;1F5F245D2F046D737B100F2AA4ADC293<br>Connection: keep-alive</p>
+<p>{<br>“role”: 1,<br>“color”: “red”,<br>“size”: “large”,<br>“name”: “Buffalo Bill”,<br>“userId”: “2342388”<br>}</p>
+<h1 id="Secure-Object-References瀹夊叏瀵硅薄寮曠敤"><a href="#Secure-Object-References瀹夊叏瀵硅薄寮曠敤" class="headerlink" title="Secure Object References瀹夊叏瀵硅薄寮曠敤"></a><strong>Secure Object References瀹夊叏瀵硅薄寮曠敤</strong></h1><h1 id="Start-with-the-end-in-mind浠ョ粓鐐逛负鍑哄彂鐐"><a href="#Start-with-the-end-in-mind浠ョ粓鐐逛负鍑哄彂鐐" class="headerlink" title="*Start with the end in mind浠ョ粓鐐逛负鍑哄彂鐐?"></a>*<em>Start with the end in mind浠ョ粓鐐逛负鍑哄彂鐐?</em></h1><p>Do you have your access control documented? If you don鈥檛, how can you enforce it? Access control is defined by the business logic that guides the application and&#x2F;or privacy and other laws.浣犵殑闂ㄧ鎺у埗鏈夎褰曞悧锛熷鏋滀笉鍋氾紝鎬庝箞鎵ц锛熻闂帶鍒剁敱鎸囧搴旂敤鍜?鎴栭殣绉佸強鍏朵粬娉曞緥鐨勪笟鍔￠€昏緫瀹氫箟銆?</p>
+<h3 id="Horizontal-and-Vertical-Access-Control姘村钩涓庡瀭鐩磋闂帶鍒"><a href="#Horizontal-and-Vertical-Access-Control姘村钩涓庡瀭鐩磋闂帶鍒" class="headerlink" title="*Horizontal and Vertical Access Control姘村钩涓庡瀭鐩磋闂帶鍒?"></a>*<em>Horizontal and Vertical Access Control姘村钩涓庡瀭鐩磋闂帶鍒?</em></h3><p>Often times we think of access control in terms of ‘roles’ (user, power-user, admin, etc.). However, as noted in the previous exercises, users with the same ‘role’ can access each other鈥檚 data. This is horizontal access control. Both should be enforced.鎴戜滑甯稿父鎶婅闂帶鍒剁湅浣滄槸鈥滆鑹测€濓紙鐢ㄦ埛銆侀珮绾х敤鎴枫€佺鐞嗗憳绛夛級銆傜劧鑰岋紝姝ｅ鍓嶉潰鐨勭粌涔犱腑鎻愬埌鐨勶紝鎷ユ湁鐩稿悓鈥滆鑹测€濈殑鐢ㄦ埛鍙互璁块棶褰兼鐨勬暟鎹€傝繖鏄按骞抽棬绂併€備袱鑰呴兘搴旇涓ユ牸鎵ц銆?</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint聽聽缁堢偣</th>
+<th>Method聽聽鏂规硶</th>
+<th>Description聽聽鎻忚堪</th>
+<th>Roles, Access Rules聽聽瑙掕壊涓庤闂鍒?</th>
+<th>Notes, Caveats聽聽娉ㄩ噴涓庢敞鎰忎簨椤?</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;profile</td>
+<td>GET</td>
+<td>view user profile聽聽鏌ョ湅鐢ㄦ埛绠€浠?</td>
+<td>Logged in User, can only view their own role鐧诲綍鐢ㄦ埛锛屽彧鑳芥煡鐪嬭嚜宸辩殑瑙掕壊</td>
+<td>Admin roles must use diff Url to view others’ profiles (see below)绠＄悊鍛樿鑹插繀椤讳娇鐢ㄤ笉鍚?URL 鏌ョ湅浠栦汉璧勬枡锛堣涓嬫枃锛?</td>
+</tr>
+<tr>
+<td>&#x2F;profile&#x2F;{id}</td>
+<td>GET</td>
+<td>view user profile of a given user鏌ョ湅鏌愮敤鎴风殑鐢ㄦ埛璧勬枡</td>
+<td>Logged in User can view their own profile by {id}, admins can also view鐧诲綍鐢ㄦ埛鍙互閫氳繃 {id} 鏌ョ湅鑷繁鐨勪釜浜鸿祫鏂欙紝绠＄悊鍛樹篃鍙互鏌ョ湅</td>
+<td>n&#x2F;a聽聽鏃?</td>
+</tr>
+<tr>
+<td>&#x2F;profile&#x2F;{id}</td>
+<td>PUT</td>
+<td>edit user profile. profile object submitted from client with request缂栬緫鐢ㄦ埛璧勬枡銆傚鎴风鎻愪氦鐨勯厤缃枃浠跺璞?</td>
+<td>Logged in User can edit their own profile by {id}, admins can also edit.鐧诲綍鐢ㄦ埛鍙互閫氳繃 {id} 缂栬緫鑷繁鐨勪釜浜鸿祫鏂欙紝绠＄悊鍛樹篃鍙互缂栬緫銆?</td>
+<td>Admin edit must be logged绠＄悊鍛樼紪杈戝繀椤昏璁板綍</td>
+</tr>
+</tbody></table>
+<h3 id="Audit-Access聽瀹¤璁块棶"><a href="#Audit-Access聽瀹¤璁块棶" class="headerlink" title="Audit Access聽瀹¤璁块棶"></a><strong>Audit Access聽瀹¤璁块棶</strong></h3><p>As displayed in the above example, your access control rules should include provisions of what access is logged. For example, if a super-user or admin can edit other鈥檚 profiles 鈥?That is something that should be logged. Other examples would include detected violations or attempts to violate access control mechanisms.濡備笂渚嬫墍绀猴紝浣犵殑璁块棶鎺у埗瑙勫垯搴斿寘鍚褰曡闂殑鏉℃銆備緥濡傦紝濡傛灉瓒呯骇鐢ㄦ埛鎴栫鐞嗗憳鍙互缂栬緫浠栦汉鐨勪釜浜鸿祫鏂?…..杩欏簲璇ヨ璁板綍涓嬫潵銆傚叾浠栦緥瀛愯繕鍖呮嫭妫€娴嬪埌杩濊鎴栬瘯鍥捐繚鍙嶈闂帶鍒舵満鍒躲€?</p>
+<h1 id="Using-Indrect-References浣跨敤-Indrect-寮曠敤"><a href="#Using-Indrect-References浣跨敤-Indrect-寮曠敤" class="headerlink" title="Using Indrect References浣跨敤 Indrect 寮曠敤"></a><strong>Using Indrect References浣跨敤 Indrect 寮曠敤</strong></h1><p>Not many applications employ it, but you can use聽<strong>indirect</strong>聽references. In this case you can run your references across a hashing, encoding or other function on the server so that the id that the client sees is not the actual reference which the server handles. This will reduce efficiency some (a common trade-off for security) and is still subject to being guessed, brute-forced or reverse engineered.</p>
+<p>铏界劧寰堝皯搴旂敤锛屼絾浣犲彲浠ヤ娇鐢?*闂存帴**寮曠敤銆傚湪杩欑鎯呭喌涓嬶紝浣犲彲浠ュ湪鏈嶅姟鍣ㄧ閫氳繃鍝堝笇銆佺紪鐮佹垨鍏朵粬鍑芥暟杩愯寮曠敤锛屼娇瀹㈡埛绔湅鍒扮殑 ID 涓嶆槸鏈嶅姟鍣ㄥ疄闄呭鐞嗙殑寮曠敤銆傝繖浼氶檷浣庢晥鐜囷紙杩欐槸瀹夊叏鎬х殑甯歌鏉冭　锛夛紝浣嗕粛鍙兘琚寽娴嬨€佹毚鍔涚牬瑙ｆ垨閫嗗悜宸ョ▼銆?<br>This approach should not be the only protection used. It can be used as an additional layer. Your server must implement the logic of mapping client (indirect) to server (direct) references.</p>
+<p>杩欑鏂规硶涓嶅簲鏄敮涓€鐨勪繚鎶ゆ帾鏂姐€傚畠鍙互浣滀负棰濆鐨勫眰銆備綘鐨勬湇鍔″櫒蹇呴』瀹炵幇灏嗗鎴风锛堥棿鎺ワ級鏄犲皠鍒版湇鍔″櫒锛堢洿鎺ワ級寮曠敤鐨勯€昏緫銆?</p>
+<h1 id="Access-Control-APIs璁块棶鎺у埗涓-API"><a href="#Access-Control-APIs璁块棶鎺у埗涓-API" class="headerlink" title="Access Control &amp; APIs璁块棶鎺у埗涓?API"></a><strong>Access Control &amp; APIs璁块棶鎺у埗涓?API</strong></h1><p>Many time, APIs or RESTFul endpoints rely on obscurity , a static ‘key’, or lack of imagination on the user鈥檚 part to control access. Good options such as digitally signed JSON Web Tokens (<a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io</a>) are a good option for API authentication &amp; access control using a combination of the claims and a digital&#x2F;cryptographic signature to validate the consumer. Other emerging standards such as Secure Token Binding promise a ‘cryptographic state’ for web services in the request headers 鈥<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10](https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10)">https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10](https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10)</a></p>
+<p>寰堝鏃跺€欙紝API 鎴?RESTFul 绔偣渚濊禆浜庢櫐娑╂€с€侀潤鎬佲€滃瘑閽モ€濇垨鐢ㄦ埛缂轰箯鎯宠薄鍔涙潵鎺у埗璁块棶銆傚儚鏁板瓧绛惧悕鐨?JSON 缃戠粶浠ょ墝锛圼<a href="https://jwt.io](https://jwt.io/)锛夎繖鏍风殑濂介€夋嫨锛屾槸">https://jwt.io](https://jwt.io/)锛夎繖鏍风殑濂介€夋嫨锛屾槸</a> API 璁よ瘉鍜岃闂帶鍒剁殑濂介€夋嫨锛屼娇鐢?灏嗗０鏄庝笌鏁板瓧&#x2F;鍔犲瘑绛惧悕缁撳悎锛岄獙璇佹秷璐硅€呰韩浠姐€?鍏朵粬鏂板叴鏍囧噯锛屽 瀹夊叏浠ょ墝缁戝畾鎵胯鍦ㄨ姹傚ご涓负缃戠粶鏈嶅姟鎻愪緵鈥滃瘑鐮佺姸鎬佲€?…..聽<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10">https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10</a></p>
+<p><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-negotiation-05">https://tools.ietf.org/html/draft-ietf-tokbind-negotiation-05</a></p>
+<p><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-https-06">https://tools.ietf.org/html/draft-ietf-tokbind-https-06</a></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://yuyang128.github.io/2026/01/22/insecure-direct-object-references-3/" data-id="cmkp8dhr600090ov14noyaijq" data-title="Insecure Direct Object References" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/01/22/http-proxy-3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          HTTP Proxy
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/01/22/webgoat-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">WebGoat</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/General/">General</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/01/22/developer-tools-3/">Developer Tools</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/hijack-a-session-3/">Hijack a session</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/missing-function-level-access-control-3/">Missing Function Level Access Control</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/http-basics-3/">HTTP Basics</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/a1-broken-access-control-3/">(A1) Broken Access Control</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/general/" class="mobile-nav-link">General</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

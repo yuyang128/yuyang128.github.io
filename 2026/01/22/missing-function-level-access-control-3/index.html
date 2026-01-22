@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Missing Function Level Access Control | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Access control, like preventing XSS with output encoding, can be tricky to maintain. One must ensure it is adequately enforced throughout the entire application, thus in every method&#x2F;function. 璁块">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Missing Function Level Access Control">
+<meta property="og:url" content="https://yuyang128.github.io/2026/01/22/missing-function-level-access-control-3/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Access control, like preventing XSS with output encoding, can be tricky to maintain. One must ensure it is adequately enforced throughout the entire application, thus in every method&#x2F;function. 璁块">
+<meta property="og:locale" content="en_US">
+<meta property="article:published_time" content="2026-01-22T09:09:36.000Z">
+<meta property="article:modified_time" content="2026-01-22T09:09:36.696Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives/">Archives</a>
+        
+          <a class="main-nav-link" href="/general/">General</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://yuyang128.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-missing-function-level-access-control-3" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2026/01/22/missing-function-level-access-control-3/" class="article-date">
+  <time class="dt-published" datetime="2026-01-22T09:09:36.000Z" itemprop="datePublished">2026-01-22</time>
+</a>
+    
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/General/">General</a>
+  </div>
+
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Missing Function Level Access Control
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Access control, like preventing XSS with output encoding, can be tricky to maintain. One must ensure it is adequately enforced throughout the entire application, thus in every method&#x2F;function.</p>
+<p>璁块棶鎺у埗锛屾瘮濡傜敤杈撳嚭缂栫爜闃叉 XSS 鐨勶紝缁存姢璧锋潵鍙兘寰堟鎵嬨€傚繀椤荤‘淇濊鏈哄埗鍦ㄦ暣涓簲鐢ㄤ腑寰楀埌鍏呭垎鎵ц锛屽洜姝ゅ湪姣忎釜鏂规硶&#x2F;鍑芥暟涓兘蹇呴』濡傛銆?</p>
+<h1 id="IDOR-vs-Missing-Function-Level-Access-ControlIDOR-涓庣己澶卞姛鑳界骇璁块棶鎺у埗"><a href="#IDOR-vs-Missing-Function-Level-Access-ControlIDOR-涓庣己澶卞姛鑳界骇璁块棶鎺у埗" class="headerlink" title="IDOR vs Missing Function Level Access ControlIDOR 涓庣己澶卞姛鑳界骇璁块棶鎺у埗"></a><strong>IDOR vs Missing Function Level Access ControlIDOR 涓庣己澶卞姛鑳界骇璁块棶鎺у埗</strong></h1><p>The fact is many people (including the author of this lesson) would combine function level access control and IDOR into ‘Access Control.’ For the sake of OWASP Top 10 and these lessons, we will make a distinction. The distinction most made is that IDOR is more of a ‘horizontal’ or ‘lateral’ access control issue, and missing function level access control ‘exposes functionality.’ Even though the IDOR lesson here demonstrates how functionality may also be exposed (at least to another user in the same role), we will look at other ways functionality might be exposed.浜嬪疄涓婏紝璁稿浜猴紙鍖呮嫭鏈绋嬩綔鑰咃級浼氬皢鍔熻兘绾ц闂帶鍒跺拰 IDOR 鍚堝苟涓衡€滆闂帶鍒垛€濄€備负浜?OWASP 鍗佸ぇ鍜岃繖浜涜绋嬬殑鐞嗚В锛屾垜浠皢鍋氬嚭鍖哄垎銆傛渶甯歌鐨勫尯鍒嗘槸锛孖DOR 鏇村亸鍚戔€滄按骞斥€濇垨鈥滄í鍚戔€濊闂帶鍒堕棶棰橈紝鑰岀己澶卞姛鑳界骇璁块棶鎺у埗鍒欌€滄毚闇插姛鑳解€濄€傚敖绠¤繖閲岀殑 IDOR 璇剧▼灞曠ず浜嗗姛鑳藉彲鑳借鏆撮湶锛堣嚦灏戝鍚屼竴瑙掕壊鐨勫叾浠栫敤鎴凤級锛屾垜浠繕浼氭帰璁ㄥ叾浠栧姛鑳藉彲鑳借鏆撮湶鐨勬柟寮忋€?</p>
+<h1 id="Relying-on-obscurity聽渚濊禆榛橀粯鏃犻椈"><a href="#Relying-on-obscurity聽渚濊禆榛橀粯鏃犻椈" class="headerlink" title="Relying on obscurity聽渚濊禆榛橀粯鏃犻椈"></a><strong>Relying on obscurity聽渚濊禆榛橀粯鏃犻椈</strong></h1><p>One could rely on HTML, CSS, or javascript to hide links that users don鈥檛 normally access. In the past, a network router tried to protect (hide) admin functionality with javascript in the UI:聽<a target="_blank" rel="noopener" href="https://www.wired.com/2009/10/routers-still-vulnerable">https://www.wired.com/2009/10/routers-still-vulnerable</a>.鐢ㄦ埛鍙互渚濊禆 HTML銆丆SS 鎴?JavaScript 鏉ラ殣钘忕敤鎴烽€氬父涓嶄細璁块棶鐨勯摼鎺ャ€傝繃鍘伙紝缃戠粶璺敱鍣ㄦ浘璇曞浘鐢?JavaScript 鍦?UI锛歔<a target="_blank" rel="noopener" href="https://www.wired.com/2009/10/routers-still-vulnerable](https://www.wired.com/2009/10/routers-still-vulnerable)%E8%81%BD%E6%B6%93%EE%85%9D%E7%B9%9A%E9%8E%B6%E3%82%8F%E7%B4%99%E9%97%85%E6%84%AF%E6%A3%8C%E9%94%9B%E5%A4%8C%EE%85%B8%E9%90%9E%E5%97%97%E6%86%B3%E9%8D%94%E7%86%BB%E5%85%98%E9%8A%86">https://www.wired.com/2009/10/routers-still-vulnerable](https://www.wired.com/2009/10/routers-still-vulnerable)聽涓繚鎶わ紙闅愯棌锛夌鐞嗗憳鍔熻兘銆</a>?</p>
+<h1 id="Finding-hidden-items聽瀵绘壘闅愯棌鐗╁搧"><a href="#Finding-hidden-items聽瀵绘壘闅愯棌鐗╁搧" class="headerlink" title="Finding hidden items聽瀵绘壘闅愯棌鐗╁搧"></a><strong>Finding hidden items聽瀵绘壘闅愯棌鐗╁搧</strong></h1><p>There are usually hints to finding functionality the UI does not openly expose in:閫氬父浼氭湁涓€浜涙彁绀猴紝鍙互鎵惧埌鐣岄潰鏈叕寮€灞曠ず鐨勫姛鑳斤細</p>
+<ul>
+<li>HTML or javascript commentsHTML 鎴?JavaScript 娉ㄩ噴</li>
+<li>Commented out elements聽娉ㄩ噴涓殑鍐呭</li>
+<li>Items hidden via CSS controls&#x2F;classes閫氳繃 CSS 鎺т欢&#x2F;绫婚殣钘忕殑鐗╁搧</li>
+</ul>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://yuyang128.github.io/2026/01/22/missing-function-level-access-control-3/" data-id="cmkp8dhr400020ov169mf8duc" data-title="Missing Function Level Access Control" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2026/01/22/hijack-a-session-3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Hijack a session
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2026/01/22/http-basics-3/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">HTTP Basics</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/General/">General</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/01/22/developer-tools-3/">Developer Tools</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/hijack-a-session-3/">Hijack a session</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/missing-function-level-access-control-3/">Missing Function Level Access Control</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/http-basics-3/">HTTP Basics</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/a1-broken-access-control-3/">(A1) Broken Access Control</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/general/" class="mobile-nav-link">General</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
