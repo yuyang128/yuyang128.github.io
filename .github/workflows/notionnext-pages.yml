@@ -29,7 +29,11 @@ jobs:
           cache: 'yarn'
           cache-dependency-path: notionnext/yarn.lock
 
-      - name: Enable Corepack (Yarn)\n        run: corepack enable\n\n      - name: Install\n        run: yarn install --frozen-lockfile
+      - name: Enable Corepack (Yarn)
+        run: corepack enable
+
+      - name: Install
+        run: yarn install --frozen-lockfile
 
       - name: Build (static export)
         env:
@@ -44,5 +48,6 @@ jobs:
           publish_dir: notionnext/out
           publish_branch: gh-pages
           cname: yuyang128.github.io
+
 
 
