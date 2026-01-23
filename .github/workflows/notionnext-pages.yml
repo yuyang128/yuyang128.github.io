@@ -26,17 +26,16 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: notionnext/package-lock.json
+          cache: 'yarn'
+          cache-dependency-path: notionnext/yarn.lock
 
-      - name: Install
-        run: npm ci
+      - name: Enable Corepack (Yarn)\n        run: corepack enable\n\n      - name: Install\n        run: yarn install --frozen-lockfile
 
       - name: Build (static export)
         env:
           # Put your Notion root page/database ID in repo secret: NOTION_PAGE_ID
           NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
-        run: npm run export
+        run: yarn export
 
       - name: Deploy to gh-pages
         uses: peaceiris/actions-gh-pages@v4
@@ -45,4 +44,5 @@ jobs:
           publish_dir: notionnext/out
           publish_branch: gh-pages
           cname: yuyang128.github.io
+
 
