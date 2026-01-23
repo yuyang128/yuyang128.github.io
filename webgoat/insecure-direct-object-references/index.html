@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>Insecure Direct Object References | Hexo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content=".notion-tree-wrap{display:flex;gap:24px} .notion-tree-nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;min-width:260px;border:1px solid #eee;padding:12px;border-radius:8px} .n">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Insecure Direct Object References">
+<meta property="og:url" content="https://yuyang128.github.io/webgoat/insecure-direct-object-references/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content=".notion-tree-wrap{display:flex;gap:24px} .notion-tree-nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;min-width:260px;border:1px solid #eee;padding:12px;border-radius:8px} .n">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://yuyang128.github.io/image%204.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%205.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%206.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%207.png">
+<meta property="og:image" content="https://yuyang128.github.io/image%208.png">
+<meta property="article:published_time" content="2026-01-22T09:48:57.972Z">
+<meta property="article:modified_time" content="2026-01-22T09:48:57.972Z">
+<meta property="article:author" content="John Doe">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://yuyang128.github.io/image%204.png">
+  
+    <link rel="alternate" href="/atom.xml" title="Hexo" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fork-awesome@1.2.0/css/fork-awesome.min.css">
+
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Hexo</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"><span class="fa fa-bars"></span></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives/">Archives</a>
+        
+          <a class="main-nav-link" href="/webgoat/">WebGoat</a>
+        
+          <a class="main-nav-link" href="/general/">General</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+        
+          <a class="nav-icon" href="/atom.xml" title="RSS Feed"><span class="fa fa-rss"></span></a>
+        
+        <a class="nav-icon nav-search-btn" title="Search"><span class="fa fa-search"></span></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://yuyang128.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="page-" class="h-entry article article-type-page" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/webgoat/insecure-direct-object-references/index.html" class="article-date">
+  <time class="dt-published" datetime="2026-01-22T09:48:57.972Z" itemprop="datePublished">2026-01-22</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Insecure Direct Object References
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <style>
+.notion-tree-wrap{display:flex;gap:24px}
+.notion-tree-nav{position:sticky;top:16px;max-height:calc(100vh - 32px);overflow:auto;min-width:260px;border:1px solid #eee;padding:12px;border-radius:8px}
+.notion-tree-nav ul{list-style:none;padding-left:14px;margin:6px 0}
+.notion-tree-nav li{margin:4px 0}
+.notion-tree-nav li.active > a{font-weight:700;text-decoration:underline}
+@media (max-width: 900px){.notion-tree-wrap{display:block}.notion-tree-nav{position:static;max-height:none;min-width:auto}}
+</style><div class="notion-tree-wrap"><nav class="notion-tree-nav"><div><strong>目录</strong></div><ul><li><a href="/webgoat/">WebGoat</a><ul><li><a href="/webgoat/general/">General</a><ul><li><a href="/webgoat/http-basics/">HTTP Basics</a></li><li><a href="/webgoat/http-proxy/">HTTP Proxy</a></li><li><a href="/webgoat/developer-tools/">Developer Tools</a></li><li><a href="/webgoat/the-cia-triad/">The CIA Triad</a></li><li><a href="/webgoat/writing-new-lesson/">Writing new lesson</a></li></ul></li></ul></li></ul></nav><div class="notion-tree-content">
+
+<h1 id="Direct-Object-References直接对象引用"><a href="#Direct-Object-References直接对象引用" class="headerlink" title="Direct Object References直接对象引用"></a><strong>Direct Object References直接对象引用</strong></h1><p>Direct Object References are when an application uses client-provided input to access data &amp; objects.直接对象引用是指应用程序使用客户端提供的输入来访问数据和对象。</p>
+<h1 id="Examples-示例"><a href="#Examples-示例" class="headerlink" title="Examples 示例"></a><strong>Examples 示例</strong></h1><p>Examples of Direct Object References using the GET method may look something like使用 GET 方法进行直接对象引用的示例可能如下</p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/dor?id=12345"><code>https://some.company.tld/dor?id=12345</code></a></p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/images?img=12345"><code>https://some.company.tld/images?img=12345</code></a></p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/dor/12345"><code>https://some.company.tld/dor/12345</code></a></p>
+<h1 id="Other-Methods-其他方法"><a href="#Other-Methods-其他方法" class="headerlink" title="Other Methods 其他方法"></a><strong>Other Methods 其他方法</strong></h1><p>POST, PUT, DELETE or other methods are also potentially susceptible and mainly only differ in the method and the potential payload.POST、PUT、DELETE 或其他方法也可能易受影响，主要区别在于方法和潜在的有效载荷。</p>
+<h1 id="Insecure-Direct-Object-References不安全感直接对象引用"><a href="#Insecure-Direct-Object-References不安全感直接对象引用" class="headerlink" title="Insecure Direct Object References不安全感直接对象引用"></a><strong>Insecure Direct Object References不安全感直接对象引用</strong></h1><p>These are considered insecure when the reference is not properly handled and allows for authorization bypasses or disclose private data that could be used to perform operations or access data that the user should not be able to perform or access. Let’s say that as a user, you go to view your profile and the URL looks something like:当引用处理不当，并允许授权绕过或泄露可能用于执行作或访问用户不应访问的作或数据时，这些数据被视为不安全。假设作为用户，你查看你的个人资料，URL 看起来像：</p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/app/user/23398"><code>https://some.company.tld/app/user/23398</code></a></p>
+<p>… and you can view your profile there. What happens if you navigate to:…你可以在那里查看你的个人资料。如果你导航到：</p>
+<p><a target="_blank" rel="noopener" href="https://some.company.tld/app/user/23399"><code>https://some.company.tld/app/user/23399</code></a> … or use another number at the end. If you can manipulate the number (user id) and view another’s profile, then the object reference is insecure. This of course can be checked or expanded beyond GET methods to view data, but to also manipulate data.<a target="_blank" rel="noopener" href="https://some.company.tld/app/user/23399"><code>https://some.company.tld/app/user/23399</code></a> ……或者在结尾使用另一个数字。如果你能作号码（用户 ID）并查看他人的资料，那么该对象引用是不安全的。当然，这可以被检查或扩展到超越 GET 方法，不仅用于查看数据，还能作数据。</p>
+<h1 id="Authenticate-First-Abuse-Authorization-Later先认证，后滥用授权"><a href="#Authenticate-First-Abuse-Authorization-Later先认证，后滥用授权" class="headerlink" title="Authenticate First, Abuse Authorization Later先认证，后滥用授权"></a><strong>Authenticate First, Abuse Authorization Later先认证，后滥用授权</strong></h1><p>Many access control issues are susceptible to attack from an authenticated-but-unauthorized user. So, let’s start by legitimately authenticating. Then, we will look for ways to bypass or abuse Authorization.许多访问控制问题容易受到已认证但未授权用户的攻击。那么，我们先从合法认证开始。然后，我们会寻找绕过或滥用授权的方法</p>
+<p>首先登入认证</p>
+<p><img src="/image%204.png" alt="image.png"></p>
+<p>然后我们View Profile我们能就能看到许多参数，同时要明白AppSec 进攻方的一个一贯原则是，要从对可见内容的原始反应中看出差异。换句话说（，原始回复中常常存在一些数据并未显示在屏幕上或页面上。比如role和ID</p>
+<p><img src="/image%205.png" alt="image.png"></p>
+<p><img src="/image%206.png" alt="image.png"></p>
+<p>这里submit就是上交role,userID</p>
+<h1 id="Guessing-Predicting-Patterns猜测与预测模式"><a href="#Guessing-Predicting-Patterns猜测与预测模式" class="headerlink" title="Guessing &amp; Predicting Patterns猜测与预测模式"></a><strong>Guessing &amp; Predicting Patterns猜测与预测模式</strong></h1><h3 id="View-Your-Own-Profile-Another-Way以另一种方式查看你的个人资料"><a href="#View-Your-Own-Profile-Another-Way以另一种方式查看你的个人资料" class="headerlink" title="View Your Own Profile Another Way以另一种方式查看你的个人资料"></a><strong>View Your Own Profile Another Way以另一种方式查看你的个人资料</strong></h3><p>The application we are working with seems to follow a RESTful pattern so far as the profile goes. Many apps have roles in which an elevated user may access content of another. In that case, just &#x2F;profile won’t work since the own user’s session&#x2F;authentication data won’t tell us whose profile they want view. 我们使用的应用在配置文件方面似乎遵循了 RESTful 的模式。许多应用设有角色，让被提升的用户可以访问他人的内容。在这种情况下，单纯使用 &#x2F;profile 是不行的，因为自己用户的会话&#x2F;认证数据不会告诉我们他们想查看谁的配置文件。</p>
+<p>这里submit就要提交&#x2F;WebGoat&#x2F;IDOR&#x2F;profile&#x2F;加上自己的ID了，和原始的提交的URL多一个{userID}参数，这样我们也明白可以去改变这个{userID}去访问其他用户的个人资料</p>
+<p><img src="/image%207.png" alt="image.png"></p>
+<p>这里查看其他资料需要用fuzz去尝试URL末尾用户ID的不同值</p>
+<p>同时编辑另一个资料有一个需要注意的点，这里使用的是RESTful应用，这个应用有一个特点这个接口只允许你使用 <strong>GET</strong>（获取数据）或 <strong>PUT</strong>（修改&#x2F;更新数据）。在 RESTful 架构中，修改资源通常应该使用 <code>PUT</code> 而不是 <code>POST</code>。</p>
+<p>同时这里还会报错<strong>415 Unsupported Media Type</strong>（不支持的媒体类型）（如果你body常规），你需要去改结果几个点</p>
+<ul>
+<li><strong>修改请求头 (Header)：</strong><br>将 <code>Content-Type: application/x-www-form-urlencoded; charset=UTF-8</code><br>改为 <code>Content-Type: application/json</code></li>
+<li><strong>修改请求体 (Body)：</strong><br>将 <code>role=2&amp;color=red</code> 这种表单格式改为 JSON 格式。</li>
+</ul>
+<p>同时注意Body要完整</p>
+<p><img src="/image%208.png" alt="image.png"></p>
+<p>PUT &#x2F;WebGoat&#x2F;IDOR&#x2F;profile&#x2F;2342388 HTTP&#x2F;1.1<br>Host: 192.168.234.130:8080<br>X-Requested-With: XMLHttpRequest<br>Accept: application&#x2F;json<br>Content-Type: application&#x2F;json<br>Cookie: JSESSIONID&#x3D;1F5F245D2F046D737B100F2AA4ADC293<br>Connection: keep-alive</p>
+<p>{<br>“role”: 1,<br>“color”: “red”,<br>“size”: “large”,<br>“name”: “Buffalo Bill”,<br>“userId”: “2342388”<br>}</p>
+<h1 id="Secure-Object-References安全对象引用"><a href="#Secure-Object-References安全对象引用" class="headerlink" title="Secure Object References安全对象引用"></a><strong>Secure Object References安全对象引用</strong></h1><h1 id="Start-with-the-end-in-mind以终点为出发点"><a href="#Start-with-the-end-in-mind以终点为出发点" class="headerlink" title="Start with the end in mind以终点为出发点"></a><strong>Start with the end in mind以终点为出发点</strong></h1><p>Do you have your access control documented? If you don’t, how can you enforce it? Access control is defined by the business logic that guides the application and&#x2F;or privacy and other laws.你的门禁控制有记录吗？如果不做，怎么执行？访问控制由指导应用和&#x2F;或隐私及其他法律的业务逻辑定义。</p>
+<h3 id="Horizontal-and-Vertical-Access-Control水平与垂直访问控制"><a href="#Horizontal-and-Vertical-Access-Control水平与垂直访问控制" class="headerlink" title="Horizontal and Vertical Access Control水平与垂直访问控制"></a><strong>Horizontal and Vertical Access Control水平与垂直访问控制</strong></h3><p>Often times we think of access control in terms of ‘roles’ (user, power-user, admin, etc.). However, as noted in the previous exercises, users with the same ‘role’ can access each other’s data. This is horizontal access control. Both should be enforced.我们常常把访问控制看作是“角色”（用户、高级用户、管理员等）。然而，正如前面的练习中提到的，拥有相同“角色”的用户可以访问彼此的数据。这是水平门禁。两者都应被严格执行。</p>
+<table>
+<thead>
+<tr>
+<th>Endpoint  终点</th>
+<th>Method  方法</th>
+<th>Description  描述</th>
+<th>Roles, Access Rules  角色与访问规则</th>
+<th>Notes, Caveats  注释与注意事项</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>&#x2F;profile</td>
+<td>GET</td>
+<td>view user profile  查看用户简介</td>
+<td>Logged in User, can only view their own role登录用户，只能查看自己的角色</td>
+<td>Admin roles must use diff Url to view others’ profiles (see below)管理员角色必须使用不同 URL 查看他人资料（见下文）</td>
+</tr>
+<tr>
+<td>&#x2F;profile&#x2F;{id}</td>
+<td>GET</td>
+<td>view user profile of a given user查看某用户的用户资料</td>
+<td>Logged in User can view their own profile by {id}, admins can also view登录用户可以通过 {id} 查看自己的个人资料，管理员也可以查看</td>
+<td>n&#x2F;a  无</td>
+</tr>
+<tr>
+<td>&#x2F;profile&#x2F;{id}</td>
+<td>PUT</td>
+<td>edit user profile. profile object submitted from client with request编辑用户资料。客户端提交的配置文件对象</td>
+<td>Logged in User can edit their own profile by {id}, admins can also edit.登录用户可以通过 {id} 编辑自己的个人资料，管理员也可以编辑。</td>
+<td>Admin edit must be logged管理员编辑必须被记录</td>
+</tr>
+</tbody></table>
+<h3 id="Audit-Access-审计访问"><a href="#Audit-Access-审计访问" class="headerlink" title="Audit Access 审计访问"></a><strong>Audit Access 审计访问</strong></h3><p>As displayed in the above example, your access control rules should include provisions of what access is logged. For example, if a super-user or admin can edit other’s profiles … That is something that should be logged. Other examples would include detected violations or attempts to violate access control mechanisms.如上例所示，你的访问控制规则应包含记录访问的条款。例如，如果超级用户或管理员可以编辑他人的个人资料……这应该被记录下来。其他例子还包括检测到违规或试图违反访问控制机制。</p>
+<h1 id="Using-Indrect-References使用-Indrect-引用"><a href="#Using-Indrect-References使用-Indrect-引用" class="headerlink" title="Using Indrect References使用 Indrect 引用"></a><strong>Using Indrect References使用 Indrect 引用</strong></h1><p>Not many applications employ it, but you can use <strong>indirect</strong> references. In this case you can run your references across a hashing, encoding or other function on the server so that the id that the client sees is not the actual reference which the server handles. This will reduce efficiency some (a common trade-off for security) and is still subject to being guessed, brute-forced or reverse engineered.</p>
+<p>虽然很少应用，但你可以使用<strong>间接</strong>引用。在这种情况下，你可以在服务器端通过哈希、编码或其他函数运行引用，使客户端看到的 ID 不是服务器实际处理的引用。这会降低效率（这是安全性的常见权衡），但仍可能被猜测、暴力破解或逆向工程。</p>
+<p>This approach should not be the only protection used. It can be used as an additional layer. Your server must implement the logic of mapping client (indirect) to server (direct) references.</p>
+<p>这种方法不应是唯一的保护措施。它可以作为额外的层。你的服务器必须实现将客户端（间接）映射到服务器（直接）引用的逻辑。</p>
+<h1 id="Access-Control-APIs访问控制与-API"><a href="#Access-Control-APIs访问控制与-API" class="headerlink" title="Access Control &amp; APIs访问控制与 API"></a><strong>Access Control &amp; APIs访问控制与 API</strong></h1><p>Many time, APIs or RESTFul endpoints rely on obscurity , a static ‘key’, or lack of imagination on the user’s part to control access. Good options such as digitally signed JSON Web Tokens (<a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io</a>) are a good option for API authentication &amp; access control using a combination of the claims and a digital&#x2F;cryptographic signature to validate the consumer. Other emerging standards such as Secure Token Binding promise a ‘cryptographic state’ for web services in the request headers …<a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10">https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10</a></p>
+<p>很多时候，API 或 RESTFul 端点依赖于晦涩性、静态“密钥”或用户缺乏想象力来控制访问。像数字签名的 JSON 网络令牌（<a target="_blank" rel="noopener" href="https://jwt.io/">https://jwt.io</a>）这样的好选择，是 API 认证和访问控制的好选择，使用 将声明与数字&#x2F;加密签名结合，验证消费者身份。 其他新兴标准，如 安全令牌绑定承诺在请求头中为网络服务提供“密码状态”…… <a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10">https://tools.ietf.org/html/draft-ietf-tokbind-protocol-10</a></p>
+<p><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-negotiation-05">https://tools.ietf.org/html/draft-ietf-tokbind-negotiation-05</a></p>
+<p><a target="_blank" rel="noopener" href="https://tools.ietf.org/html/draft-ietf-tokbind-https-06">https://tools.ietf.org/html/draft-ietf-tokbind-https-06</a></p>
+</div></div>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://yuyang128.github.io/webgoat/insecure-direct-object-references/index.html" data-id="cmkp9s3yb00092kv1gapq4kmc" data-title="Insecure Direct Object References" class="article-share-link"><span class="fa fa-share">Share</span></a>
+      
+      
+      
+    </footer>
+  </div>
+  
+    
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Categories</h3>
+    <div class="widget">
+      <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/General/">General</a></li><li class="category-list-item"><a class="category-list-link" href="/categories/WebGoat/">WebGoat</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2026/01/">January 2026</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2026/01/23/webgoat/">WebGoat</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/developer-tools-3/">Developer Tools</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/hijack-a-session-3/">Hijack a session</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/missing-function-level-access-control-3/">Missing Function Level Access Control</a>
+          </li>
+        
+          <li>
+            <a href="/2026/01/22/http-basics-3/">HTTP Basics</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2026 John Doe<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives/" class="mobile-nav-link">Archives</a>
+  
+    <a href="/webgoat/" class="mobile-nav-link">WebGoat</a>
+  
+    <a href="/general/" class="mobile-nav-link">General</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.6.4.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>
