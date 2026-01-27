@@ -39,6 +39,12 @@ jobs:
         env:
           # Put your Notion root page/database ID in repo secret: NOTION_PAGE_ID
           NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+          NEXT_PUBLIC_NOTION_PROPERTY_TITLE: Title
+          NEXT_PUBLIC_NOTION_PROPERTY_STATUS: Status
+          NEXT_PUBLIC_NOTION_PROPERTY_SLUG: Slug
+          NEXT_PUBLIC_NOTION_PROPERTY_DATE: Date
+          NEXT_PUBLIC_NOTION_PROPERTY_TAGS: Tags
+          NEXT_PUBLIC_NOTION_PROPERTY_SUMMARY: Summary
         run: yarn export
 
       - name: Deploy to gh-pages
@@ -48,6 +54,7 @@ jobs:
           publish_dir: notionnext/out
           publish_branch: gh-pages
           cname: yuyang128.github.io
+
 
 
 
