@@ -1,8 +1,27 @@
-/* 静态文件导入 自定义样式*/
+/* Custom overrides loaded on every page.
+ * Edit this file to tweak theme styles without touching theme source. */
 
-#theme-fukasawa .sideLeft hr{
-    opacity: .04;
+/* Fukasawa: soften the sidebar divider. */
+#theme-fukasawa .sideLeft hr {
+  opacity: 0.04;
 }
+
+/* Keep the original FontAwesome icon override. */
 .fa-info:before {
-    content: "\f05a";
+  content: "\\f05a";
 }
+
+/* Example: background (optional).
+ * Put an image at `notionnext/public/images/bg.jpg` to use it. */
+#theme-fukasawa {
+  background: #0b0f1a url('/images/bg.jpg') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
+}
+
+/* Live2D canvas tweaks (the "dog" is the default Live2D model). */
+#theme-fukasawa #live2d {
+  width: 280px;
+  height: 250px;
+}
+

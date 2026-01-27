@@ -1,1 +1,3 @@
-// 这里编写自定义js脚本；将被静态引入到页面中
+// Custom JS loaded on every page.
+// Keep this file small: it runs client-side for all routes.
+
