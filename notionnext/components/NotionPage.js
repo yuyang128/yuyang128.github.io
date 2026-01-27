@@ -118,7 +118,7 @@ const NotionPage = ({ post, className }) => {
 
   if (!post?.blockMap) {
     return (
-      <div id='notion-article' className={mx-auto overflow-hidden }>
+      <div id='notion-article' className={`mx-auto overflow-hidden ${className || ''}`}>
         <div style={{ padding: '16px', border: '1px solid #eee', borderRadius: '8px' }}>
           <strong>Notion content not loaded.</strong>
           <div style={{ marginTop: '8px' }}>
@@ -130,6 +130,8 @@ const NotionPage = ({ post, className }) => {
   }
 
   return (
+    <div
+      id='notion-article'
       className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
