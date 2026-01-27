@@ -39,6 +39,8 @@ jobs:
         env:
           # Put your Notion root page/database ID in repo secret: NOTION_PAGE_ID
           NOTION_PAGE_ID: ${{ secrets.NOTION_PAGE_ID }}
+          # For GitHub Pages (static export), use a client-side redirect on 404 for Notion UUID links.
+          UUID_REDIRECT: 'true'
           NEXT_PUBLIC_NOTION_PROPERTY_TITLE: Title
           NEXT_PUBLIC_NOTION_PROPERTY_STATUS: Status
           NEXT_PUBLIC_NOTION_PROPERTY_SLUG: Slug
