@@ -116,7 +116,20 @@ const NotionPage = ({ post, className }) => {
     return () => clearTimeout(timer)
   }, [post])
 
-  if (!post?.blockMap) {\n    return (\n      <div id='notion-article' className={mx-auto overflow-hidden }>\n        <div style={{ padding: '16px', border: '1px solid #eee', borderRadius: '8px' }}>\n          <strong>Notion content not loaded.</strong>\n          <div style={{ marginTop: '8px' }}>\n            Please check that your Notion database/page is published to web and NOTION_PAGE_ID is correct.\n          </div>\n        </div>\n      </div>\n    )\n  }\n\n  return (\n    <div\n      id='notion-article'
+  if (!post?.blockMap) {
+    return (
+      <div id='notion-article' className={mx-auto overflow-hidden }>
+        <div style={{ padding: '16px', border: '1px solid #eee', borderRadius: '8px' }}>
+          <strong>Notion content not loaded.</strong>
+          <div style={{ marginTop: '8px' }}>
+            Please check that your Notion database is published to web and NOTION_PAGE_ID is correct.
+          </div>
+        </div>
+      </div>
+    )
+  }
+
+  return (
       className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
