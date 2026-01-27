@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+﻿import BLOG from '@/blog.config'
 import { getOrSetDataWithCache } from '@/lib/cache/cache_manager'
 import { getAllCategories } from '@/lib/notion/getAllCategories'
 import getAllPageIds from '@/lib/notion/getAllPageIds'
@@ -19,10 +19,10 @@ export { getPost } from '../notion/getNotionPost'
 export { getPage as getPostBlocks } from '../notion/getPostBlocks'
 
 /**
- * 获取博客数据; 基于Notion实现
+ * 鑾峰彇鍗氬鏁版嵁; 鍩轰簬Notion瀹炵幇
  * @param {*} pageId
  * @param {*} from
- * @param {*} locale 语言  zh|en|jp 等等
+ * @param {*} locale 璇█  zh|en|jp 绛夌瓑
  * @returns
  *
  */
@@ -31,7 +31,7 @@ export async function getGlobalData({
   from,
   locale
 }) {
-  // 获取站点数据 ， 如果pageId有逗号隔开则分次取数据
+  // 鑾峰彇绔欑偣鏁版嵁 锛?濡傛灉pageId鏈夐€楀彿闅斿紑鍒欏垎娆″彇鏁版嵁
   const siteIds = pageId?.split(',') || []
   let data = EmptyData(pageId)
 
@@ -44,7 +44,7 @@ export async function getGlobalData({
       const siteId = siteIds[index]
       const id = extractLangId(siteId)
       const prefix = extractLangPrefix(siteId)
-      // 第一个id站点默认语言
+      // 绗竴涓猧d绔欑偣榛樿璇█
       if (index === 0 || locale === prefix) {
         data = await getSiteDataByPageId({
           pageId: id,
@@ -53,19 +53,19 @@ export async function getGlobalData({
       }
     }
   } catch (error) {
-    console.error('异常', error)
+    console.error('寮傚父', error)
   }
   return handleDataBeforeReturn(deepClone(data))
 }
 
 /**
- * 获取指定notion的collection数据
+ * 鑾峰彇鎸囧畾notion鐨刢ollection鏁版嵁
  * @param pageId
- * @param from 请求来源
+ * @param from 璇锋眰鏉ユ簮
  * @returns {Promise<JSX.Element|*|*[]>}
  */
 export async function getSiteDataByPageId({ pageId, from }) {
-  // 获取NOTION原始数据，此接支持mem缓存。
+  // 鑾峰彇NOTION鍘熷鏁版嵁锛屾鎺ユ敮鎸乵em缂撳瓨銆?
   return await getOrSetDataWithCache(
     `site_data_${pageId}`,
     async (pageId, from) => {
@@ -78,7 +78,7 @@ export async function getSiteDataByPageId({ pageId, from }) {
 }
 
 /**
- * 获取公告
+ * 鑾峰彇鍏憡
  */
 async function getNotice(post) {
   if (!post) {
@@ -90,7 +90,7 @@ async function getNotice(post) {
 }
 
 /**
- * 空的默认数据
+ * 绌虹殑榛樿鏁版嵁
  * @param {*} pageId
  * @returns
  */
@@ -101,9 +101,9 @@ const EmptyData = pageId => {
     allPages: [
       {
         id: 1,
-        title: `无法获取Notion数据，请检查Notion_ID： \n 当前 ${pageId}`,
+        title: `鏃犳硶鑾峰彇Notion鏁版嵁锛岃妫€鏌otion_ID锛?\n 褰撳墠 ${pageId}`,
         summary:
-          '访问文档获取帮助 → https://docs.tangly1024.com/article/vercel-deploy-notion-next',
+          '璁块棶鏂囨。鑾峰彇甯姪 鈫?https://docs.tangly1024.com/article/vercel-deploy-notion-next',
         status: 'Published',
         type: 'Post',
         slug: 'oops',
@@ -137,8 +137,8 @@ const EmptyData = pageId => {
 }
 
 /**
- * 将Notion数据转站点数据
- * 这里统一对数据格式化
+ * 灏哊otion鏁版嵁杞珯鐐规暟鎹?
+ * 杩欓噷缁熶竴瀵规暟鎹牸寮忓寲
  * @returns {Promise<JSX.Element|null|*>}
  */
 async function convertNotionToSiteData(pageId, from, pageRecordMap) {
@@ -149,7 +149,7 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
   pageId = idToUuid(pageId)
   let block = pageRecordMap.block || {}
   const rawMetadata = block[pageId]?.value
-  // Check Type Page-Database和Inline-Database
+  // Check Type Page-Database鍜孖nline-Database
   if (
     rawMetadata?.type !== 'collection_view_page' &&
     rawMetadata?.type !== 'collection_view'
@@ -175,7 +175,7 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
 
   if (pageIds?.length === 0) {
     console.error(
-      '获取到的文章列表为空，请检查notion模板',
+      '鑾峰彇鍒扮殑鏂囩珷鍒楄〃涓虹┖锛岃妫€鏌otion妯℃澘',
       collectionQuery,
       collection,
       collectionView,
@@ -183,10 +183,10 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
       pageRecordMap
     )
   } else {
-    // console.log('有效Page数量', pageIds?.length)
+    // console.log('鏈夋晥Page鏁伴噺', pageIds?.length)
   }
 
-  // 抓取主数据库最多抓取1000个blocks，溢出的数block这里统一抓取一遍
+  // 鎶撳彇涓绘暟鎹簱鏈€澶氭姄鍙?000涓猙locks锛屾孩鍑虹殑鏁癰lock杩欓噷缁熶竴鎶撳彇涓€閬?
   const blockIdsNeedFetch = []
   for (let i = 0; i < pageIds.length; i++) {
     const id = pageIds[i]
@@ -198,7 +198,7 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
   const fetchedBlocks = await fetchInBatches(blockIdsNeedFetch)
   block = Object.assign({}, block, fetchedBlocks)
 
-  // 获取每篇文章基础数据
+  // 鑾峰彇姣忕瘒鏂囩珷鍩虹鏁版嵁
   for (let i = 0; i < pageIds.length; i++) {
     const id = pageIds[i]
     const value = block[id]?.value || fetchedBlocks[id]?.value
@@ -216,21 +216,21 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
     }
   }
 
-  // 站点配置优先读取配置表格，否则读取blog.config.js 文件
+  // 绔欑偣閰嶇疆浼樺厛璇诲彇閰嶇疆琛ㄦ牸锛屽惁鍒欒鍙朾log.config.js 鏂囦欢
   const NOTION_CONFIG = (await getConfigMapFromConfigPage(collectionData)) || {}
 
-  // 处理每一条数据的字段
+  // 澶勭悊姣忎竴鏉℃暟鎹殑瀛楁
   collectionData.forEach(function (element) {
     adjustPageProperties(element, NOTION_CONFIG)
   })
 
-  // 站点基础信息
+  // 绔欑偣鍩虹淇℃伅
   const siteInfo = getSiteInfo({ collection, block, NOTION_CONFIG })
 
-  // 文章计数
+  // 鏂囩珷璁℃暟
   let postCount = 0
 
-  // 查找所有的Post和Page
+  // 鏌ユ壘鎵€鏈夌殑Post鍜孭age
   const allPages = collectionData.filter(post => {
     if (post?.type === 'Post' && post.status === 'Published') {
       postCount++
@@ -261,12 +261,12 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
       )
     })?.[0]
   )
-  // 所有分类
+  // 鎵€鏈夊垎绫?
   const categoryOptions = getAllCategories({
     allPages,
     categoryOptions: getCategoryOptions(schema)
   })
-  // 所有标签
+  // 鎵€鏈夋爣绛?
   const tagSchemaOptions = getTagOptions(schema)
   const tagOptions =
     getAllTags({
@@ -274,13 +274,13 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
       tagOptions: tagSchemaOptions ?? [],
       NOTION_CONFIG
     }) ?? null
-  // 旧的菜单
+  // 鏃х殑鑿滃崟
   const customNav = getCustomNav({
     allPages: collectionData.filter(
       post => post?.type === 'Page' && post.status === 'Published'
     )
   })
-  // 新的菜单
+  // 鏂扮殑鑿滃崟
   const customMenu = getCustomMenu({ collectionData, NOTION_CONFIG })
   const latestPosts = getLatestPosts({ allPages, from, latestPostCount: 6 })
   const allNavPages = getNavPages({ allPages })
@@ -310,14 +310,14 @@ async function convertNotionToSiteData(pageId, from, pageRecordMap) {
 }
 
 /**
- * 返回给浏览器前端的数据处理
- * 适当脱敏
- * 减少体积
- * 其它处理
+ * 杩斿洖缁欐祻瑙堝櫒鍓嶇鐨勬暟鎹鐞?
+ * 閫傚綋鑴辨晱
+ * 鍑忓皯浣撶Н
+ * 鍏跺畠澶勭悊
  * @param {*} db
  */
 function handleDataBeforeReturn(db) {
-  // 清理多余数据
+  // 娓呯悊澶氫綑鏁版嵁
   delete db.block
   delete db.schema
   delete db.rawMetadata
@@ -328,7 +328,7 @@ function handleDataBeforeReturn(db) {
   delete db.collectionId
   delete db.collectionView
 
-  // 清理多余的块
+  // 娓呯悊澶氫綑鐨勫潡
   if (db?.notice) {
     db.notice = cleanBlock(db?.notice)
     delete db.notice?.id
@@ -343,7 +343,7 @@ function handleDataBeforeReturn(db) {
   db.allNavPages = cleanPages(db?.allNavPages, db.tagOptions)
   db.allPages = cleanPages(db.allPages, db.tagOptions)
   db.latestPosts = cleanPages(db.latestPosts, db.tagOptions)
-  // 必须在使用完毕后才能进行清理
+  // 蹇呴』鍦ㄤ娇鐢ㄥ畬姣曞悗鎵嶈兘杩涜娓呯悊
   db.tagOptions = cleanTagOptions(db?.tagOptions)
 
   const POST_SCHEDULE_PUBLISH = siteConfig(
@@ -352,9 +352,9 @@ function handleDataBeforeReturn(db) {
     db.NOTION_CONFIG
   )
   if (POST_SCHEDULE_PUBLISH) {
-    //   console.log('[定时发布] 开启检测')
+    //   console.log('[瀹氭椂鍙戝竷] 寮€鍚娴?)
     db.allPages?.forEach(p => {
-      // 新特性，判断文章的发布和下架时间，如果不在有效期内则进行下架处理
+      // 鏂扮壒鎬э紝鍒ゆ柇鏂囩珷鐨勫彂甯冨拰涓嬫灦鏃堕棿锛屽鏋滀笉鍦ㄦ湁鏁堟湡鍐呭垯杩涜涓嬫灦澶勭悊
       const publish = isInRange(p.title, p.date)
       if (!publish) {
         const currentTimestamp = Date.now()
@@ -369,24 +369,24 @@ function handleDataBeforeReturn(db) {
           p.date.time_zone
         )
         console.log(
-          '[定时发布] 隐藏--> 文章:',
+          '[瀹氭椂鍙戝竷] 闅愯棌--> 鏂囩珷:',
           p.title,
-          '当前时间戳:',
+          '褰撳墠鏃堕棿鎴?',
           currentTimestamp,
-          '目标时间戳:',
+          '鐩爣鏃堕棿鎴?',
           startTimestamp,
           '-',
           endTimestamp
         )
         console.log(
-          '[定时发布] 隐藏--> 文章:',
+          '[瀹氭椂鍙戝竷] 闅愯棌--> 鏂囩珷:',
           p.title,
-          '当前时间:',
+          '褰撳墠鏃堕棿:',
           new Date(),
-          '目标时间:',
+          '鐩爣鏃堕棿:',
           p.date
         )
-        // 隐藏
+        // 闅愯棌
         p.status = 'Invisible'
       }
     })
@@ -396,33 +396,33 @@ function handleDataBeforeReturn(db) {
 }
 
 /**
- * 处理文章列表中的异常数据
- * @param {Array} allPages - 所有页面数据
- * @param {Array} tagOptions - 标签选项
- * @returns {Array} 处理后的 allPages
+ * 澶勭悊鏂囩珷鍒楄〃涓殑寮傚父鏁版嵁
+ * @param {Array} allPages - 鎵€鏈夐〉闈㈡暟鎹?
+ * @param {Array} tagOptions - 鏍囩閫夐」
+ * @returns {Array} 澶勭悊鍚庣殑 allPages
  */
 function cleanPages(allPages, tagOptions) {
-  // 校验参数是否为数组
+  // 鏍￠獙鍙傛暟鏄惁涓烘暟缁?
   if (!Array.isArray(allPages) || !Array.isArray(tagOptions)) {
     console.warn('Invalid input: allPages and tagOptions should be arrays.')
-    return allPages || [] // 返回空数组或原始值
+    return allPages || [] // 杩斿洖绌烘暟缁勬垨鍘熷鍊?
   }
 
-  // 提取 tagOptions 中所有合法的标签名
+  // 鎻愬彇 tagOptions 涓墍鏈夊悎娉曠殑鏍囩鍚?
   const validTags = new Set(
     tagOptions
       .map(tag => (typeof tag.name === 'string' ? tag.name : null))
-      .filter(Boolean) // 只保留合法的字符串
+      .filter(Boolean) // 鍙繚鐣欏悎娉曠殑瀛楃涓?
   )
 
-  // 遍历所有的 pages
+  // 閬嶅巻鎵€鏈夌殑 pages
   allPages.forEach(page => {
-    // 确保 tagItems 是数组
+    // 纭繚 tagItems 鏄暟缁?
     if (Array.isArray(page.tagItems)) {
-      // 对每个 page 的 tagItems 进行过滤
+      // 瀵规瘡涓?page 鐨?tagItems 杩涜杩囨护
       page.tagItems = page.tagItems.filter(
         tagItem =>
-          validTags.has(tagItem?.name) && typeof tagItem.name === 'string' // 校验 tagItem.name 是否是字符串
+          validTags.has(tagItem?.name) && typeof tagItem.name === 'string' // 鏍￠獙 tagItem.name 鏄惁鏄瓧绗︿覆
       )
     }
   })
@@ -431,7 +431,7 @@ function cleanPages(allPages, tagOptions) {
 }
 
 /**
- * 清理一组数据的id
+ * 娓呯悊涓€缁勬暟鎹殑id
  * @param {*} items
  * @returns
  */
@@ -449,7 +449,7 @@ function shortenIds(items) {
 }
 
 /**
- * 清理一组数据的id
+ * 娓呯悊涓€缁勬暟鎹殑id
  * @param {*} items
  * @returns
  */
@@ -466,7 +466,7 @@ function cleanIds(items) {
 }
 
 /**
- * 清理和过滤tagOptions
+ * 娓呯悊鍜岃繃婊agOptions
  * @param {*} tagOptions
  * @returns
  */
@@ -482,7 +482,7 @@ function cleanTagOptions(tagOptions) {
 }
 
 /**
- * 清理block数据
+ * 娓呯悊block鏁版嵁
  */
 function cleanBlock(item) {
   const post = deepClone(item)
@@ -518,7 +518,7 @@ function cleanBlock(item) {
 }
 
 /**
- * 获取最新文章 根据最后修改时间倒序排列
+ * 鑾峰彇鏈€鏂版枃绔?鏍规嵁鏈€鍚庝慨鏀规椂闂村€掑簭鎺掑垪
  * @param {*}} param0
  * @returns
  */
@@ -536,8 +536,8 @@ function getLatestPosts({ allPages, from, latestPostCount }) {
 }
 
 /**
- * 获取用户自定义单页菜单
- * 旧版本，不读取Menu菜单，而是读取type=Page生成菜单
+ * 鑾峰彇鐢ㄦ埛鑷畾涔夊崟椤佃彍鍗?
+ * 鏃х増鏈紝涓嶈鍙朚enu鑿滃崟锛岃€屾槸璇诲彇type=Page鐢熸垚鑿滃崟
  * @param notionPageData
  * @returns {Promise<[]|*[]>}
  */
@@ -559,7 +559,7 @@ function getCustomNav({ allPages }) {
 }
 
 /**
- * 获取自定义菜单
+ * 鑾峰彇鑷畾涔夎彍鍗?
  * @param {*} allPages
  * @returns
  */
@@ -591,7 +591,7 @@ function getCustomMenu({ collectionData, NOTION_CONFIG }) {
 }
 
 /**
- * 获取标签选项
+ * 鑾峰彇鏍囩閫夐」
  * @param schema
  * @returns {undefined}
  */
@@ -604,7 +604,7 @@ function getTagOptions(schema) {
 }
 
 /**
- * 获取分类选项
+ * 鑾峰彇鍒嗙被閫夐」
  * @param schema
  * @returns {{}|*|*[]}
  */
@@ -617,7 +617,7 @@ function getCategoryOptions(schema) {
 }
 
 /**
- * 站点信息
+ * 绔欑偣淇℃伅
  * @param notionPageData
  * @param from
  * @returns {Promise<{title,description,pageCover,icon}>}
@@ -625,11 +625,11 @@ function getCategoryOptions(schema) {
 function getSiteInfo({ collection, block, NOTION_CONFIG }) {
   const defaultTitle = NOTION_CONFIG?.TITLE || 'NotionNext BLOG'
   const defaultDescription =
-    NOTION_CONFIG?.DESCRIPTION || '这是一个由NotionNext生成的站点'
+    NOTION_CONFIG?.DESCRIPTION || '杩欐槸涓€涓敱NotionNext鐢熸垚鐨勭珯鐐?
   const defaultPageCover = NOTION_CONFIG?.HOME_BANNER_IMAGE || '/bg_image.jpg'
   const defaultIcon = NOTION_CONFIG?.AVATAR || '/avatar.svg'
   const defaultLink = NOTION_CONFIG?.LINK || BLOG.LINK
-  // 空数据的情况返回默认值
+  // 绌烘暟鎹殑鎯呭喌杩斿洖榛樿鍊?
   if (!collection && !block) {
     return {
       title: defaultTitle,
@@ -649,16 +649,16 @@ function getSiteInfo({ collection, block, NOTION_CONFIG }) {
     ? mapImgUrl(collection?.cover, collection, 'collection')
     : defaultPageCover
 
-  // 用户头像压缩一下
+  // 鐢ㄦ埛澶村儚鍘嬬缉涓€涓?
   let icon = compressImage(
     collection?.icon
       ? mapImgUrl(collection?.icon, collection, 'collection')
       : defaultIcon
   )
-  // 站点网址
+  // 绔欑偣缃戝潃
   const link = NOTION_CONFIG?.LINK || defaultLink
 
-  // 站点图标不能是emoji
+  // 绔欑偣鍥炬爣涓嶈兘鏄痚moji
   const emojiPattern = /\uD83C[\uDF00-\uDFFF]|\uD83D[\uDC00-\uDE4F]/g
   if (!icon || emojiPattern.test(icon)) {
     icon = defaultIcon
@@ -667,15 +667,15 @@ function getSiteInfo({ collection, block, NOTION_CONFIG }) {
 }
 
 /**
- * 判断文章是否在发布时间内
- * @param {string} title - 文章标题
- * @param {Object} date - 时间范围参数
- * @param {string} date.start_date - 开始日期（格式：YYYY-MM-DD）
- * @param {string} date.start_time - 开始时间（可选，格式：HH:mm）
- * @param {string} date.end_date - 结束日期（格式：YYYY-MM-DD）
- * @param {string} date.end_time - 结束时间（可选，格式：HH:mm）
- * @param {string} date.time_zone - 时区（IANA格式，如 "Asia/Shanghai"）
- * @returns {boolean} 是否在范围内
+ * 鍒ゆ柇鏂囩珷鏄惁鍦ㄥ彂甯冩椂闂村唴
+ * @param {string} title - 鏂囩珷鏍囬
+ * @param {Object} date - 鏃堕棿鑼冨洿鍙傛暟
+ * @param {string} date.start_date - 寮€濮嬫棩鏈燂紙鏍煎紡锛歒YYY-MM-DD锛?
+ * @param {string} date.start_time - 寮€濮嬫椂闂达紙鍙€夛紝鏍煎紡锛欻H:mm锛?
+ * @param {string} date.end_date - 缁撴潫鏃ユ湡锛堟牸寮忥細YYYY-MM-DD锛?
+ * @param {string} date.end_time - 缁撴潫鏃堕棿锛堝彲閫夛紝鏍煎紡锛欻H:mm锛?
+ * @param {string} date.time_zone - 鏃跺尯锛圛ANA鏍煎紡锛屽 "Asia/Shanghai"锛?
+ * @returns {boolean} 鏄惁鍦ㄨ寖鍥村唴
  */
 function isInRange(title, date = {}) {
   const {
@@ -686,14 +686,14 @@ function isInRange(title, date = {}) {
     time_zone = 'Asia/Shanghai'
   } = date
 
-  // 获取当前时间的时间戳（基于目标时区）
+  // 鑾峰彇褰撳墠鏃堕棿鐨勬椂闂存埑锛堝熀浜庣洰鏍囨椂鍖猴級
   const currentTimestamp = Date.now()
 
-  // 获取开始和结束时间的时间戳
+  // 鑾峰彇寮€濮嬪拰缁撴潫鏃堕棿鐨勬椂闂存埑
   const startTimestamp = getTimestamp(start_date, start_time, time_zone)
   const endTimestamp = getTimestamp(end_date, end_time, time_zone)
 
-  // 判断是否在范围内
+  // 鍒ゆ柇鏄惁鍦ㄨ寖鍥村唴
   if (startTimestamp && currentTimestamp < startTimestamp) {
     return false
   }
@@ -706,65 +706,65 @@ function isInRange(title, date = {}) {
 }
 
 /**
- * 将指定时区的日期字符串转换为 UTC 时间
- * @param {string} dateStr - 日期字符串，格式为 YYYY-MM-DD HH:mm:ss
- * @param {string} timeZone - 时区名称（如 "Asia/Shanghai"）
- * @returns {Date} - 转换后的 Date 对象（UTC 时间）
+ * 灏嗘寚瀹氭椂鍖虹殑鏃ユ湡瀛楃涓茶浆鎹负 UTC 鏃堕棿
+ * @param {string} dateStr - 鏃ユ湡瀛楃涓诧紝鏍煎紡涓?YYYY-MM-DD HH:mm:ss
+ * @param {string} timeZone - 鏃跺尯鍚嶇О锛堝 "Asia/Shanghai"锛?
+ * @returns {Date} - 杞崲鍚庣殑 Date 瀵硅薄锛圲TC 鏃堕棿锛?
  */
 function convertToUTC(dateStr, timeZone = 'Asia/Shanghai') {
-  // 维护一个时区偏移映射（以小时为单位）
+  // 缁存姢涓€涓椂鍖哄亸绉绘槧灏勶紙浠ュ皬鏃朵负鍗曚綅锛?
   const timeZoneOffsets = {
-    // UTC 基础
+    // UTC 鍩虹
     UTC: 0,
     'Etc/GMT': 0,
     'Etc/GMT+0': 0,
 
-    // 亚洲地区
-    'Asia/Shanghai': 8, // 中国
-    'Asia/Taipei': 8, // 台湾
-    'Asia/Tokyo': 9, // 日本
-    'Asia/Seoul': 9, // 韩国
-    'Asia/Kolkata': 5.5, // 印度
-    'Asia/Jakarta': 7, // 印尼
-    'Asia/Singapore': 8, // 新加坡
-    'Asia/Hong_Kong': 8, // 香港
-    'Asia/Bangkok': 7, // 泰国
-    'Asia/Dubai': 4, // 阿联酋
-    'Asia/Tehran': 3.5, // 伊朗
-    'Asia/Riyadh': 3, // 沙特阿拉伯
+    // 浜氭床鍦板尯
+    'Asia/Shanghai': 8, // 涓浗
+    'Asia/Taipei': 8, // 鍙版咕
+    'Asia/Tokyo': 9, // 鏃ユ湰
+    'Asia/Seoul': 9, // 闊╁浗
+    'Asia/Kolkata': 5.5, // 鍗板害
+    'Asia/Jakarta': 7, // 鍗板凹
+    'Asia/Singapore': 8, // 鏂板姞鍧?
+    'Asia/Hong_Kong': 8, // 棣欐腐
+    'Asia/Bangkok': 7, // 娉板浗
+    'Asia/Dubai': 4, // 闃胯仈閰?
+    'Asia/Tehran': 3.5, // 浼婃湕
+    'Asia/Riyadh': 3, // 娌欑壒闃挎媺浼?
 
-    // 欧洲地区
-    'Europe/London': 0, // 英国（GMT）
-    'Europe/Paris': 1, // 法国（CET）
-    'Europe/Berlin': 1, // 德国
-    'Europe/Moscow': 3, // 俄罗斯
-    'Europe/Amsterdam': 1, // 荷兰
+    // 娆ф床鍦板尯
+    'Europe/London': 0, // 鑻卞浗锛圙MT锛?
+    'Europe/Paris': 1, // 娉曞浗锛圕ET锛?
+    'Europe/Berlin': 1, // 寰峰浗
+    'Europe/Moscow': 3, // 淇勭綏鏂?
+    'Europe/Amsterdam': 1, // 鑽峰叞
 
-    // 美洲地区
-    'America/New_York': -5, // 美国东部（EST）
-    'America/Chicago': -6, // 美国中部（CST）
-    'America/Denver': -7, // 美国山区时间（MST）
-    'America/Los_Angeles': -8, // 美国西部（PST）
-    'America/Sao_Paulo': -3, // 巴西
-    'America/Argentina/Buenos_Aires': -3, // 阿根廷
+    // 缇庢床鍦板尯
+    'America/New_York': -5, // 缇庡浗涓滈儴锛圗ST锛?
+    'America/Chicago': -6, // 缇庡浗涓儴锛圕ST锛?
+    'America/Denver': -7, // 缇庡浗灞卞尯鏃堕棿锛圡ST锛?
+    'America/Los_Angeles': -8, // 缇庡浗瑗块儴锛圥ST锛?
+    'America/Sao_Paulo': -3, // 宸磋タ
+    'America/Argentina/Buenos_Aires': -3, // 闃挎牴寤?
 
-    // 非洲地区
-    'Africa/Johannesburg': 2, // 南非
-    'Africa/Cairo': 2, // 埃及
-    'Africa/Nairobi': 3, // 肯尼亚
+    // 闈炴床鍦板尯
+    'Africa/Johannesburg': 2, // 鍗楅潪
+    'Africa/Cairo': 2, // 鍩冨強
+    'Africa/Nairobi': 3, // 鑲凹浜?
 
-    // 大洋洲地区
-    'Australia/Sydney': 10, // 澳大利亚东部
-    'Australia/Perth': 8, // 澳大利亚西部
-    'Pacific/Auckland': 13, // 新西兰
-    'Pacific/Fiji': 12, // 斐济
+    // 澶ф磱娲插湴鍖?
+    'Australia/Sydney': 10, // 婢冲ぇ鍒╀簹涓滈儴
+    'Australia/Perth': 8, // 婢冲ぇ鍒╀簹瑗块儴
+    'Pacific/Auckland': 13, // 鏂拌タ鍏?
+    'Pacific/Fiji': 12, // 鏂愭祹
 
-    // 北极与南极
-    'Antarctica/Palmer': -3, // 南极洲帕尔默
-    'Antarctica/McMurdo': 13 // 南极洲麦克默多
+    // 鍖楁瀬涓庡崡鏋?
+    'Antarctica/Palmer': -3, // 鍗楁瀬娲插笗灏旈粯
+    'Antarctica/McMurdo': 13 // 鍗楁瀬娲查害鍏嬮粯澶?
   }
 
-  // 预设每个大洲的默认时区
+  // 棰勮姣忎釜澶ф床鐨勯粯璁ゆ椂鍖?
   const continentDefaults = {
     Asia: 'Asia/Shanghai',
     Europe: 'Europe/London',
@@ -776,15 +776,15 @@ function convertToUTC(dateStr, timeZone = 'Asia/Shanghai') {
     UTC: 'UTC'
   }
 
-  // 获取目标时区的偏移量（以小时为单位）
+  // 鑾峰彇鐩爣鏃跺尯鐨勫亸绉婚噺锛堜互灏忔椂涓哄崟浣嶏級
   let offsetHours = timeZoneOffsets[timeZone]
 
-  // 未被支持的时区采用兼容
+  // 鏈鏀寔鐨勬椂鍖洪噰鐢ㄥ吋瀹?
   if (offsetHours === undefined) {
-    // 获取时区所属大洲（"Continent/City" -> "Continent"）
+    // 鑾峰彇鏃跺尯鎵€灞炲ぇ娲诧紙"Continent/City" -> "Continent"锛?
     const continent = timeZone.split('/')[0]
 
-    // 选择该大洲的默认时区
+    // 閫夋嫨璇ュぇ娲茬殑榛樿鏃跺尯
     const fallbackZone = continentDefaults[continent] || 'UTC'
     offsetHours = timeZoneOffsets[fallbackZone]
 
@@ -793,27 +793,27 @@ function convertToUTC(dateStr, timeZone = 'Asia/Shanghai') {
     )
   }
 
-  // 将日期字符串转换为本地时间的 Date 对象
+  // 灏嗘棩鏈熷瓧绗︿覆杞崲涓烘湰鍦版椂闂寸殑 Date 瀵硅薄
   const localDate = new Date(`${dateStr.replace(' ', 'T')}Z`)
   if (isNaN(localDate.getTime())) {
     throw new Error(`Invalid date string: ${dateStr}`)
   }
 
-  // 计算 UTC 时间的时间戳
+  // 璁＄畻 UTC 鏃堕棿鐨勬椂闂存埑
   const utcTimestamp = localDate.getTime() - offsetHours * 60 * 60 * 1000
   return new Date(utcTimestamp)
 }
 
-// 辅助函数：生成指定日期时间的时间戳（基于目标时区）
+// 杈呭姪鍑芥暟锛氱敓鎴愭寚瀹氭棩鏈熸椂闂寸殑鏃堕棿鎴筹紙鍩轰簬鐩爣鏃跺尯锛?
 function getTimestamp(date, time = '00:00', time_zone) {
   if (!date) return null
   return convertToUTC(`${date} ${time}:00`, time_zone).getTime()
 }
 
 /**
- * 获取导航用的精减文章列表
- * gitbook主题用到，只保留文章的标题分类标签分类信息，精减掉摘要密码日期等数据
- * 导航页面的条件，必须是Posts
+ * 鑾峰彇瀵艰埅鐢ㄧ殑绮惧噺鏂囩珷鍒楄〃
+ * gitbook涓婚鐢ㄥ埌锛屽彧淇濈暀鏂囩珷鐨勬爣棰樺垎绫绘爣绛惧垎绫讳俊鎭紝绮惧噺鎺夋憳瑕佸瘑鐮佹棩鏈熺瓑鏁版嵁
+ * 瀵艰埅椤甸潰鐨勬潯浠讹紝蹇呴』鏄疨osts
  * @param {*} param0
  */
 export function getNavPages({ allPages }) {
