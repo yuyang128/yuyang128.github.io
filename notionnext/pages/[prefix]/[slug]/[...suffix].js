@@ -81,23 +81,25 @@ export async function getStaticProps({
     // 鏃犳硶鑾峰彇鏂囩珷
     props.post = null
   } else {
-    // If Notion data contains blocks that cannot be fetched/rendered during static export,
-    // don't fail the whole build; render an empty page instead.
-    try {
-      // If Notion data contains blocks that cannot be fetched/rendered during static export,
-    // don't fail the whole build; render an empty page instead.
-    try {
-      await processPostData(props, from)
-    } catch (err) {
-      console.error('[processPostData failed]', from, err)
-      props.post = null
-    }
-    } catch (err) {
-      console.error('[processPostData failed]', from, err)
-      props.post = null
-    }
+    
+// If Notion data contains blocks that cannot be fetched/rendered during static export,
+    
+// don't fail the whole build; render an empty page instead.
+    
+try {
+    
+  await processPostData(props, from)
+    
+} catch (err) {
+    
+  console.error('[processPostData failed]', from, err)
+    
+  props.post = null
+    
+}
 
-  }
+}
+
   return {
     props,
     revalidate: process.env.EXPORT

@@ -53,50 +53,25 @@ const Slug = props => {
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
-      setLock(false)
-    }
-
-    // 璇诲彇涓婃璁板綍 鑷姩鎻愪氦瀵嗙爜
-    const passInputs = getPasswordQuery(router.asPath)
-    if (passInputs.length > 0) {
-      for (const passInput of passInputs) {
-        if (validPassword(passInput)) {
-          break // 瀵嗙爜楠岃瘉鎴愬姛锛屽仠姝㈠皾璇?
-        }
-      }
-    }
-  }, [post])
-
-  // 鏂囩珷鍔犺浇
-  useEffect(() => {
-    if (lock) {
-      return
-    }
-    // 鏂囩珷瑙ｉ攣鍚庣敓鎴愮洰褰曚笌鍐呭
-    if (post?.blockMap?.block) {
-      post.content = Object.keys(post.blockMap.block).filter(
-        key => post.blockMap.block[key]?.value?.parent_id === post.id
-      )
-      post.toc = getPageTableOfContents(post, post.blockMap)
-    }
-  }, [router, lock])
-
-  props = { ...props, lock, validPassword }
-  const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
-  return (
-    <>
-      {/* 鏂囩珷甯冨眬 */}
-      <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
-      {/* 瑙ｉ攣瀵嗙爜鎻愮ず妗?*/}
-      {post?.password && post?.password !== '' && !lock && <Notification />}
-      {/* 瀵兼祦宸ュ叿 */}
-      <OpenWrite />
-    </>
-  )
+      
+// If Notion data contains blocks that cannot be fetched/rendered during static export,
+      
+// don't fail the whole build; render an empty page instead.
+      
+try {
+      
+  await processPostData(props, from)
+      
+} catch (err) {
+      
+  console.error('[processPostData failed]', from, err)
+      
+  props.post = null
+      
 }
 
-export async function getStaticPaths() {
-  if (!BLOG.isProd) {
+}
+
     return {
       paths: [],
       fallback: true
