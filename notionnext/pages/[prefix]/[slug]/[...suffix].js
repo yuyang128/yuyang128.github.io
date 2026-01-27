@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+﻿import BLOG from '@/blog.config'
 import { siteConfig } from '@/lib/config'
 import { getGlobalData, getPost } from '@/lib/db/getSiteData'
 import { checkSlugHasMorThanTwoSlash, processPostData } from '@/lib/utils/post'
@@ -6,8 +6,8 @@ import { idToUuid } from 'notion-utils'
 import Slug from '..'
 
 /**
- * 根据notion的slug访问页面
- * 解析三级以上目录 /article/2023/10/29/test
+ * 鏍规嵁notion鐨剆lug璁块棶椤甸潰
+ * 瑙ｆ瀽涓夌骇浠ヤ笂鐩綍 /article/2023/10/29/test
  * @param {*} props
  * @returns
  */
@@ -16,7 +16,7 @@ const PrefixSlug = props => {
 }
 
 /**
- * 编译渲染页面路径
+ * 缂栬瘧娓叉煋椤甸潰璺緞
  * @returns
  */
 export async function getStaticPaths() {
@@ -45,7 +45,7 @@ export async function getStaticPaths() {
 }
 
 /**
- * 抓取页面数据
+ * 鎶撳彇椤甸潰鏁版嵁
  * @param {*} param0
  * @returns
  */
@@ -57,7 +57,7 @@ export async function getStaticProps({
   const from = `slug-props-${fullSlug}`
   const props = await getGlobalData({ from, locale })
 
-  // 在列表内查找文章
+  // 鍦ㄥ垪琛ㄥ唴鏌ユ壘鏂囩珷
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
@@ -68,7 +68,7 @@ export async function getStaticProps({
     )
   })
 
-  // 处理非列表内文章的内信息
+  // 澶勭悊闈炲垪琛ㄥ唴鏂囩珷鐨勫唴淇℃伅
   if (!props?.post) {
     const pageId = fullSlug.slice(-1)[0]
     if (pageId.length >= 32) {
@@ -78,10 +78,25 @@ export async function getStaticProps({
   }
 
   if (!props?.post) {
-    // 无法获取文章
+    // 鏃犳硶鑾峰彇鏂囩珷
     props.post = null
   } else {
-    await processPostData(props, from)
+    // If Notion data contains blocks that cannot be fetched/rendered during static export,
+    // don't fail the whole build; render an empty page instead.
+    try {
+      // If Notion data contains blocks that cannot be fetched/rendered during static export,
+    // don't fail the whole build; render an empty page instead.
+    try {
+      await processPostData(props, from)
+    } catch (err) {
+      console.error('[processPostData failed]', from, err)
+      props.post = null
+    }
+    } catch (err) {
+      console.error('[processPostData failed]', from, err)
+      props.post = null
+    }
+
   }
   return {
     props,
@@ -96,3 +111,4 @@ export async function getStaticProps({
 }
 
 export default PrefixSlug
+

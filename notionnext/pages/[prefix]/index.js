@@ -1,4 +1,4 @@
-import BLOG from '@/blog.config'
+﻿import BLOG from '@/blog.config'
 import useNotification from '@/components/Notification'
 import OpenWrite from '@/components/OpenWrite'
 import { siteConfig } from '@/lib/config'
@@ -14,8 +14,8 @@ import { idToUuid } from 'notion-utils'
 import { useEffect, useState } from 'react'
 
 /**
- * 根据notion的slug访问页面
- * 只解析一级目录例如 /about
+ * 鏍规嵁notion鐨剆lug璁块棶椤甸潰
+ * 鍙В鏋愪竴绾х洰褰曚緥濡?/about
  * @param {*} props
  * @returns
  */
@@ -24,12 +24,12 @@ const Slug = props => {
   const router = useRouter()
   const { locale } = useGlobal()
 
-  // 文章锁🔐
+  // 鏂囩珷閿侌煍?
   const [lock, setLock] = useState(post?.password && post?.password !== '')
   const { showNotification, Notification } = useNotification()
 
   /**
-   * 验证文章密码
+   * 楠岃瘉鏂囩珷瀵嗙爜
    * @param {*} passInput
    */
   const validPassword = passInput => {
@@ -39,40 +39,40 @@ const Slug = props => {
     const encrypt = md5(post?.slug + passInput)
     if (passInput && encrypt === post?.password) {
       setLock(false)
-      // 输入密码存入localStorage，下次自动提交
+      // 杈撳叆瀵嗙爜瀛樺叆localStorage锛屼笅娆¤嚜鍔ㄦ彁浜?
       localStorage.setItem('password_' + router.asPath, passInput)
-      showNotification(locale.COMMON.ARTICLE_UNLOCK_TIPS) // 设置解锁成功提示显示
+      showNotification(locale.COMMON.ARTICLE_UNLOCK_TIPS) // 璁剧疆瑙ｉ攣鎴愬姛鎻愮ず鏄剧ず
       return true
     }
     return false
   }
 
-  // 文章加载
+  // 鏂囩珷鍔犺浇
   useEffect(() => {
-    // 文章加密
+    // 鏂囩珷鍔犲瘑
     if (post?.password && post?.password !== '') {
       setLock(true)
     } else {
       setLock(false)
     }
 
-    // 读取上次记录 自动提交密码
+    // 璇诲彇涓婃璁板綍 鑷姩鎻愪氦瀵嗙爜
     const passInputs = getPasswordQuery(router.asPath)
     if (passInputs.length > 0) {
       for (const passInput of passInputs) {
         if (validPassword(passInput)) {
-          break // 密码验证成功，停止尝试
+          break // 瀵嗙爜楠岃瘉鎴愬姛锛屽仠姝㈠皾璇?
         }
       }
     }
   }, [post])
 
-  // 文章加载
+  // 鏂囩珷鍔犺浇
   useEffect(() => {
     if (lock) {
       return
     }
-    // 文章解锁后生成目录与内容
+    // 鏂囩珷瑙ｉ攣鍚庣敓鎴愮洰褰曚笌鍐呭
     if (post?.blockMap?.block) {
       post.content = Object.keys(post.blockMap.block).filter(
         key => post.blockMap.block[key]?.value?.parent_id === post.id
@@ -85,11 +85,11 @@ const Slug = props => {
   const theme = siteConfig('THEME', BLOG.THEME, props.NOTION_CONFIG)
   return (
     <>
-      {/* 文章布局 */}
+      {/* 鏂囩珷甯冨眬 */}
       <DynamicLayout theme={theme} layoutName='LayoutSlug' {...props} />
-      {/* 解锁密码提示框 */}
+      {/* 瑙ｉ攣瀵嗙爜鎻愮ず妗?*/}
       {post?.password && post?.password !== '' && !lock && <Notification />}
-      {/* 导流工具 */}
+      {/* 瀵兼祦宸ュ叿 */}
       <OpenWrite />
     </>
   )
@@ -124,7 +124,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     }
   }
 
-  // 在列表内查找文章
+  // 鍦ㄥ垪琛ㄥ唴鏌ユ壘鏂囩珷
   props.post = props?.allPages?.find(p => {
     return (
       p.type.indexOf('Menu') < 0 &&
@@ -132,7 +132,7 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     )
   })
 
-  // 处理非列表内文章的内信息
+  // 澶勭悊闈炲垪琛ㄥ唴鏂囩珷鐨勫唴淇℃伅
   if (!props?.post) {
     const pageId = prefix
     if (pageId.length >= 32) {
@@ -141,10 +141,25 @@ export async function getStaticProps({ params: { prefix }, locale }) {
     }
   }
   if (!props?.post) {
-    // 无法获取文章
+    // 鏃犳硶鑾峰彇鏂囩珷
     props.post = null
   } else {
-    await processPostData(props, from)
+    // If Notion data contains blocks that cannot be fetched/rendered during static export,
+    // don't fail the whole build; render an empty page instead.
+    try {
+      // If Notion data contains blocks that cannot be fetched/rendered during static export,
+    // don't fail the whole build; render an empty page instead.
+    try {
+      await processPostData(props, from)
+    } catch (err) {
+      console.error('[processPostData failed]', from, err)
+      props.post = null
+    }
+    } catch (err) {
+      console.error('[processPostData failed]', from, err)
+      props.post = null
+    }
+
   }
   return {
     props,
@@ -159,3 +174,4 @@ export async function getStaticProps({ params: { prefix }, locale }) {
 }
 
 export default Slug
+
