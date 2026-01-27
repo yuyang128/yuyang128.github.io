@@ -43,6 +43,10 @@ jobs:
           UUID_REDIRECT: 'true'
           # Theme
           NEXT_PUBLIC_THEME: fukasawa
+          # Live2D (pet widget)
+          NEXT_PUBLIC_WIDGET_PET: 'true'
+          NEXT_PUBLIC_WIDGET_PET_LINK: /live2d/hanna/model.model3.json
+          NEXT_PUBLIC_WIDGET_PET_SWITCH_THEME: 'false'
           NEXT_PUBLIC_NOTION_PROPERTY_TITLE: Title
           NEXT_PUBLIC_NOTION_PROPERTY_STATUS: Status
           NEXT_PUBLIC_NOTION_PROPERTY_SLUG: Slug
