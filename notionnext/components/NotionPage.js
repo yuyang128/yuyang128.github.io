@@ -1,4 +1,4 @@
-import { siteConfig } from '@/lib/config'
+﻿import { siteConfig } from '@/lib/config'
 import { compressImage, mapImgUrl } from '@/lib/notion/mapImage'
 import { isBrowser, loadExternalResource } from '@/lib/utils'
 import mediumZoom from '@fisch0920/medium-zoom'
@@ -8,13 +8,13 @@ import { useEffect, useRef } from 'react'
 import { NotionRenderer } from 'react-notion-x'
 
 /**
- * 整个站点的核心组件
- * 将Notion数据渲染成网页
+ * 鏁翠釜绔欑偣鐨勬牳蹇冪粍浠?
+ * 灏哊otion鏁版嵁娓叉煋鎴愮綉椤?
  * @param {*} param0
  * @returns
  */
 const NotionPage = ({ post, className }) => {
-  // 是否关闭数据库和画册的点击跳转
+  // 鏄惁鍏抽棴鏁版嵁搴撳拰鐢诲唽鐨勭偣鍑昏烦杞?
   const POST_DISABLE_GALLERY_CLICK = siteConfig('POST_DISABLE_GALLERY_CLICK')
   const POST_DISABLE_DATABASE_CLICK = siteConfig('POST_DISABLE_DATABASE_CLICK')
   const SPOILER_TEXT_TAG = siteConfig('SPOILER_TEXT_TAG')
@@ -29,27 +29,27 @@ const NotionPage = ({ post, className }) => {
 
   const zoomRef = useRef(zoom ? zoom.clone() : null)
   const IMAGE_ZOOM_IN_WIDTH = siteConfig('IMAGE_ZOOM_IN_WIDTH', 1200)
-  // 页面首次打开时执行的勾子
+  // 椤甸潰棣栨鎵撳紑鏃舵墽琛岀殑鍕惧瓙
   useEffect(() => {
-    // 检测当前的url并自动滚动到对应目标
+    // 妫€娴嬪綋鍓嶇殑url骞惰嚜鍔ㄦ粴鍔ㄥ埌瀵瑰簲鐩爣
     autoScrollToHash()
   }, [])
 
-  // 页面文章发生变化时会执行的勾子
+  // 椤甸潰鏂囩珷鍙戠敓鍙樺寲鏃朵細鎵ц鐨勫嬀瀛?
   useEffect(() => {
-    // 相册视图点击禁止跳转，只能放大查看图片
+    // 鐩稿唽瑙嗗浘鐐瑰嚮绂佹璺宠浆锛屽彧鑳芥斁澶ф煡鐪嬪浘鐗?
     if (POST_DISABLE_GALLERY_CLICK) {
-      // 针对页面中的gallery视图，点击后是放大图片还是跳转到gallery的内部页面
+      // 閽堝椤甸潰涓殑gallery瑙嗗浘锛岀偣鍑诲悗鏄斁澶у浘鐗囪繕鏄烦杞埌gallery鐨勫唴閮ㄩ〉闈?
       processGalleryImg(zoomRef?.current)
     }
 
-    // 页内数据库点击禁止跳转，只能查看
+    // 椤靛唴鏁版嵁搴撶偣鍑荤姝㈣烦杞紝鍙兘鏌ョ湅
     if (POST_DISABLE_DATABASE_CLICK) {
       processDisableDatabaseUrl()
     }
 
     /**
-     * 放大查看图片时替换成高清图像
+     * 鏀惧ぇ鏌ョ湅鍥剧墖鏃舵浛鎹㈡垚楂樻竻鍥惧儚
      */
     const observer = new MutationObserver((mutationsList, observer) => {
       mutationsList.forEach(mutation => {
@@ -58,11 +58,11 @@ const NotionPage = ({ post, className }) => {
           mutation.attributeName === 'class'
         ) {
           if (mutation.target.classList.contains('medium-zoom-image--opened')) {
-            // 等待动画完成后替换为更高清的图像
+            // 绛夊緟鍔ㄧ敾瀹屾垚鍚庢浛鎹负鏇撮珮娓呯殑鍥惧儚
             setTimeout(() => {
-              // 获取该元素的 src 属性
+              // 鑾峰彇璇ュ厓绱犵殑 src 灞炴€?
               const src = mutation?.target?.getAttribute('src')
-              //   替换为更高清的图像
+              //   鏇挎崲涓烘洿楂樻竻鐨勫浘鍍?
               mutation?.target?.setAttribute(
                 'src',
                 compressImage(src, IMAGE_ZOOM_IN_WIDTH)
@@ -73,7 +73,7 @@ const NotionPage = ({ post, className }) => {
       })
     })
 
-    // 监视页面元素和属性变化
+    // 鐩戣椤甸潰鍏冪礌鍜屽睘鎬у彉鍖?
     observer.observe(document.body, {
       attributes: true,
       subtree: true,
@@ -86,7 +86,7 @@ const NotionPage = ({ post, className }) => {
   }, [post])
 
   useEffect(() => {
-    // Spoiler文本功能
+    // Spoiler鏂囨湰鍔熻兘
     if (SPOILER_TEXT_TAG) {
       import('lodash/escapeRegExp').then(escapeRegExp => {
         Promise.all([
@@ -99,26 +99,24 @@ const NotionPage = ({ post, className }) => {
       })
     }
 
-    // 查找所有具有 'notion-collection-page-properties' 类的元素,删除notion自带的页面properties
+    // 鏌ユ壘鎵€鏈夊叿鏈?'notion-collection-page-properties' 绫荤殑鍏冪礌,鍒犻櫎notion鑷甫鐨勯〉闈roperties
     const timer = setTimeout(() => {
-      // 查找所有具有 'notion-collection-page-properties' 类的元素
+      // 鏌ユ壘鎵€鏈夊叿鏈?'notion-collection-page-properties' 绫荤殑鍏冪礌
       const elements = document.querySelectorAll(
         '.notion-collection-page-properties'
       )
 
-      // 遍历这些元素并将其从 DOM 中移除
+      // 閬嶅巻杩欎簺鍏冪礌骞跺皢鍏朵粠 DOM 涓Щ闄?
       elements?.forEach(element => {
         element?.remove()
       })
-    }, 1000) // 1000 毫秒 = 1 秒
+    }, 1000) // 1000 姣 = 1 绉?
 
-    // 清理定时器，防止组件卸载时执行
+    // 娓呯悊瀹氭椂鍣紝闃叉缁勪欢鍗歌浇鏃舵墽琛?
     return () => clearTimeout(timer)
   }, [post])
 
-  return (
-    <div
-      id='notion-article'
+  if (!post?.blockMap) {\n    return (\n      <div id='notion-article' className={mx-auto overflow-hidden }>\n        <div style={{ padding: '16px', border: '1px solid #eee', borderRadius: '8px' }}>\n          <strong>Notion content not loaded.</strong>\n          <div style={{ marginTop: '8px' }}>\n            Please check that your Notion database/page is published to web and NOTION_PAGE_ID is correct.\n          </div>\n        </div>\n      </div>\n    )\n  }\n\n  return (\n    <div\n      id='notion-article'
       className={`mx-auto overflow-hidden ${className || ''}`}>
       <NotionRenderer
         recordMap={post?.blockMap}
@@ -141,7 +139,7 @@ const NotionPage = ({ post, className }) => {
 }
 
 /**
- * 页面的数据库链接禁止跳转，只能查看
+ * 椤甸潰鐨勬暟鎹簱閾炬帴绂佹璺宠浆锛屽彧鑳芥煡鐪?
  */
 const processDisableDatabaseUrl = () => {
   if (isBrowser) {
@@ -153,7 +151,7 @@ const processDisableDatabaseUrl = () => {
 }
 
 /**
- * gallery视图，点击后是放大图片还是跳转到gallery的内部页面
+ * gallery瑙嗗浘锛岀偣鍑诲悗鏄斁澶у浘鐗囪繕鏄烦杞埌gallery鐨勫唴閮ㄩ〉闈?
  */
 const processGalleryImg = zoom => {
   setTimeout(() => {
@@ -176,11 +174,11 @@ const processGalleryImg = zoom => {
 }
 
 /**
- * 根据url参数自动滚动到锚位置
+ * 鏍规嵁url鍙傛暟鑷姩婊氬姩鍒伴敋浣嶇疆
  */
 const autoScrollToHash = () => {
   setTimeout(() => {
-    // 跳转到指定标题
+    // 璺宠浆鍒版寚瀹氭爣棰?
     const hash = window?.location?.hash
     const needToJumpToTitle = hash && hash.length > 0
     if (needToJumpToTitle) {
@@ -194,7 +192,7 @@ const autoScrollToHash = () => {
 }
 
 /**
- * 将id映射成博文内部链接。
+ * 灏唅d鏄犲皠鎴愬崥鏂囧唴閮ㄩ摼鎺ャ€?
  * @param {*} id
  * @returns
  */
@@ -204,7 +202,7 @@ const mapPageUrl = id => {
 }
 
 /**
- * 缩放
+ * 缂╂斁
  * @returns
  */
 function getMediumZoomMargin() {
@@ -225,7 +223,7 @@ function getMediumZoomMargin() {
   }
 }
 
-// 代码
+// 浠ｇ爜
 const Code = dynamic(
   () =>
     import('react-notion-x/build/third-party/code').then(m => {
@@ -234,18 +232,18 @@ const Code = dynamic(
   { ssr: false }
 )
 
-// 公式
+// 鍏紡
 const Equation = dynamic(
   () =>
     import('@/components/Equation').then(async m => {
-      // 化学方程式
+      // 鍖栧鏂圭▼寮?
       await import('@/lib/plugins/mhchem')
       return m.Equation
     }),
   { ssr: false }
 )
 
-// 原版文档
+// 鍘熺増鏂囨。
 // const Pdf = dynamic(
 //   () => import('react-notion-x/build/third-party/pdf').then(m => m.Pdf),
 //   {
@@ -256,20 +254,20 @@ const Pdf = dynamic(() => import('@/components/Pdf').then(m => m.Pdf), {
   ssr: false
 })
 
-// 美化代码 from: https://github.com/txs
+// 缇庡寲浠ｇ爜 from: https://github.com/txs
 const PrismMac = dynamic(() => import('@/components/PrismMac'), {
   ssr: false
 })
 
 /**
- * tweet嵌入
+ * tweet宓屽叆
  */
 const TweetEmbed = dynamic(() => import('react-tweet-embed'), {
   ssr: false
 })
 
 /**
- * 文内google广告
+ * 鏂囧唴google骞垮憡
  */
 const AdEmbed = dynamic(
   () => import('@/components/GoogleAdsense').then(m => m.AdEmbed),
@@ -296,3 +294,4 @@ const Tweet = ({ id }) => {
 }
 
 export default NotionPage
+
